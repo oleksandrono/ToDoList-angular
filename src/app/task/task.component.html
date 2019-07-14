@@ -1,0 +1,14 @@
+<input type="checkbox" id="checkbox{{task.taskId}}" (change)="isCompleted($event, task.taskId)">
+<p id="taskName{{task.taskId}}">{{task.taskName}}</p>
+<div class="buttons-group" id="defaultButtons{{task.taskId}}">
+  <button class="btn-primary" id="editTask{{task.taskId}}" (click)="editTask(editTaskField, task.taskId)">Edit</button>
+  <button class="btn-primary" id="deleteTask{{task.taskId}}" (click)="deleteTask(task.taskId)">Delete</button>
+</div>
+<div class="edit-task buttons-group" id="editButtons{{task.taskId}}">
+  <input type="text" id="editTaskField{{task.taskId}}" (keydown.enter)="saveEdit(editTaskField, task.taskId)" (keydown.escape)="cancelEdit(task.taskId)" #editTaskField>
+  <button class="btn-primary" (click)="saveEdit(editTaskField, task.taskId)">Save</button>
+  <button class="btn-primary" (click)="cancelEdit(task.taskId)">Cancel</button>
+</div>
+
+
+

@@ -15,7 +15,7 @@
           </li>
         </ul>
 
-        <div class="add-list" id="addListk">
+        <div class="add-list" id="addList">
           <form action="POST" id="addListForm" class="add-task-form" (submit)="addList($event, inputListName)">
             <input id="listNameField" class="list_name_input form-control" type="text" placeholder="List name"
                    #inputListName>
@@ -29,11 +29,12 @@
         <h2>Tasks<span id="listName"></span></h2>
         <p id="tasksHint">Choose or create list</p>
         <div id="task-container">
-          <div *ngFor="let task of tasks" id="task{{task.taskId}}" class="task">
+          <div id="task{{task.taskId}}" class="task" *ngFor="let task of tasks">
             <app-task
               [task]="task"
               [tasks]="tasks"
               [currentListId] = 'currentListId'
+              *ngIf="currentListId===task.listId"
             ></app-task>
           </div>
           <div class="add_task" id="addTask">

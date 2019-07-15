@@ -1,4 +1,4 @@
-<input type="checkbox" id="checkbox{{task.taskId}}" (change)="isCompleted($event, task.taskId)">
+<input type="checkbox" class="checkbox" id="checkbox{{task.taskId}}" (change)="isCompleted($event, task.taskId)">
 <p id="taskName{{task.taskId}}">{{task.taskName}}</p>
 <div class="buttons-group" id="defaultButtons{{task.taskId}}">
   <button class="btn-primary" id="editTask{{task.taskId}}" (click)="editTask(editTaskField, task.taskId)">Edit</button>

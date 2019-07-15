@@ -1,0 +1,26 @@
+{
+  "lists": [
+    {
+      "listId": 1,
+      "listName": "list 1 from json-server"
+    },
+    {
+      "listId": 2,
+      "listName": "list 2 from json-server"
+    }
+  ],
+  "tasks": [
+    {
+      "taskId": 1,
+      "taskName": "task 1 from json server",
+      "done": false,
+      "listId": 1
+    },
+    {
+      "taskId": 2,
+      "taskName": "task 2 from json server",
+      "done": false,
+      "listId": 2
+    }
+  ]
+}

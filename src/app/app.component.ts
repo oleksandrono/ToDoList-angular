@@ -44,20 +44,22 @@ export class AppComponent implements OnInit {
       let idList = [];
       if (this.lists.length > 0) {
         this.lists.forEach((element, index) => {
-          idList.push(element.listId);
+          idList.push(element.id);
         });
       }
+
       let listId = 1;
       if (this.lists.length === 0) {
         listId = 1;
-      } else if (this.lists.length > 0) {
+      }
+      else if (this.lists.length > 0) {
         for (let i = 1; i <= this.lists.length; i++) {
           listId = Math.max.apply(null, idList) + 1;
         }
       }
 
       const list = {
-        listId: listId,
+        id: listId,
         listName: inputListName.value
       };
       this.lists.push(list);
@@ -70,13 +72,14 @@ export class AppComponent implements OnInit {
         })
       };
 
-      this.http.post('http://localhost:3000/lists', list, httpOptions);
+      this.http.post('http://localhost:3000/lists', list, httpOptions)
+        .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
     }
   }
 
   chooseList(listId: any, listName: any) {
     this.currentListId = listId;
-    document.getElementById('listName').innerText = `, in ${listName}.`;
+    document.getElementById('listNameText').innerText = `, in ${listName}.`;
     document.getElementById('task-container').style.display = 'block';
     document.getElementById('tasksHint').style.display = 'none';
   }
@@ -91,7 +94,7 @@ export class AppComponent implements OnInit {
       const idList = [];
       if (this.tasks.length > 0) {
         this.tasks.forEach((element, index) => {
-          idList.push(element.taskId);
+          idList.push(element.id);
         });
       }
       let taskId = 1;
@@ -105,13 +108,23 @@ export class AppComponent implements OnInit {
 
 
       const task = {
-        taskId: taskId,
+        id: taskId,
         taskName: inputTaskName.value,
         done: false,
         listId: this.currentListId
       };
+
       this.tasks.push(task);
       inputTaskName.value = '';
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+
+      this.http.post('http://localhost:3000/tasks', task, httpOptions)
+        .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
 
     }
   }

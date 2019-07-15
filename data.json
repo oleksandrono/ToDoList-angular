@@ -1,24 +1,30 @@
 {
   "lists": [
     {
-      "listId": 1,
-      "listName": "list 1 from json-server"
+      "id": 1,
+      "listName": "InCamp"
     },
     {
-      "listId": 2,
-      "listName": "list 2 from json-server"
+      "id": 2,
+      "listName": "Products"
     }
   ],
   "tasks": [
     {
-      "taskId": 1,
-      "taskName": "task 1 from json server",
+      "id": 1,
+      "taskName": "Review ToDo list on angular.",
       "done": false,
       "listId": 1
     },
     {
-      "taskId": 2,
-      "taskName": "task 2 from json server",
+      "id": 2,
+      "taskName": "Buy 2 bred.",
+      "done": false,
+      "listId": 2
+    },
+    {
+      "id": 3,
+      "taskName": "Buy 2 milk.",
       "done": false,
       "listId": 2
     }

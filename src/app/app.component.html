@@ -6,7 +6,7 @@
       <div class="lists-block">
         <h2>Lists</h2>
         <ul>
-          <li *ngFor="let list of lists" id="list{{list.listId}}" (click)="chooseList(list.listId, list.listName)">
+          <li *ngFor="let list of lists" id="list{{list.id}}" (click)="chooseList(list.id, list.listName)">
             <app-list
               [list]="list"
               [lists]="lists"
@@ -26,10 +26,10 @@
       </div>
 
       <div class="tasks-block">
-        <h2>Tasks<span id="listName"></span></h2>
+        <h2>Tasks<span id="listNameText"></span></h2>
         <p id="tasksHint">Choose or create list</p>
         <div id="task-container">
-          <div id="task{{task.taskId}}" class="task" *ngFor="let task of tasks">
+          <div id="task{{task.id}}" class="task" *ngFor="let task of tasks">
             <app-task
               [task]="task"
               [tasks]="tasks"

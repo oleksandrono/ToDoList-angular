@@ -1,4 +1,4 @@
 export class List {
-  listId: number;
+  id: number;
   listName: string;
 }

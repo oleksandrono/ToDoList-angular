@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-task',
@@ -11,7 +12,7 @@ export class TaskComponent implements OnInit {
   @Input() tasks;
   @Input() currentListId;
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -20,9 +21,18 @@ export class TaskComponent implements OnInit {
 
   deleteTask(taskId: any) {
     this.tasks.forEach((element, index) => {
-      if (element.taskId === taskId) {
+      if (element.id === taskId) {
         this.tasks.splice(index, 1);
-        document.getElementById('task' + element.taskId).remove();
+        document.getElementById('task' + element.id).remove();
+
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json'
+          })
+        };
+
+        this.http.delete(`http://localhost:3000/tasks/${element.id}`, httpOptions)
+          .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
       }
     });
   }
@@ -36,13 +46,30 @@ export class TaskComponent implements OnInit {
   saveEdit(editTaskField: HTMLInputElement, taskId: any) {
     if (editTaskField.value === ' ' || editTaskField.value.length < 1) {
       console.log('field must be not empty');
-    } else {
+    }
+    else {
       this.tasks.forEach((element, index) => {
-        if (element.taskId === taskId) {
+        if (element.id === taskId) {
           element.taskName = editTaskField.value;
           document.getElementById(`taskName${taskId}`).innerText = editTaskField.value;
           document.getElementById(`defaultButtons${taskId}`).style.display = 'flex';
           document.getElementById(`editButtons${taskId}`).style.display = 'none';
+
+          const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+          let task = {
+            id: element.id,
+            taskName: editTaskField.value,
+            done: element.done,
+            listId: element.listId
+          };
+
+          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, httpOptions)
+            .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
+
         }
       });
     }

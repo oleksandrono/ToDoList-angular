@@ -1,13 +1,13 @@
-<input type="checkbox" class="checkbox" id="checkbox{{task.taskId}}" (change)="isCompleted($event, task.taskId)">
-<p id="taskName{{task.taskId}}">{{task.taskName}}</p>
-<div class="buttons-group" id="defaultButtons{{task.taskId}}">
-  <button class="btn-primary" id="editTask{{task.taskId}}" (click)="editTask(editTaskField, task.taskId)">Edit</button>
-  <button class="btn-primary" id="deleteTask{{task.taskId}}" (click)="deleteTask(task.taskId)">Delete</button>
+<input type="checkbox" class="checkbox" id="checkbox{{task.id}}" (change)="isCompleted($event, task.id)">
+<p id="taskName{{task.id}}">{{task.taskName}}</p>
+<div class="buttons-group" id="defaultButtons{{task.id}}">
+  <button class="btn-primary" id="editTask{{task.id}}" (click)="editTask(editTaskField, task.id)">Edit</button>
+  <button class="btn-primary" id="deleteTask{{task.id}}" (click)="deleteTask(task.id)">Delete</button>
 </div>
-<div class="edit-task buttons-group" id="editButtons{{task.taskId}}">
-  <input type="text" id="editTaskField{{task.taskId}}" (keydown.enter)="saveEdit(editTaskField, task.taskId)" (keydown.escape)="cancelEdit(task.taskId)" #editTaskField>
-  <button class="btn-primary" (click)="saveEdit(editTaskField, task.taskId)">Save</button>
-  <button class="btn-primary" (click)="cancelEdit(task.taskId)">Cancel</button>
+<div class="edit-task buttons-group" id="editButtons{{task.id}}">
+  <input type="text" id="editTaskField{{task.id}}" (keydown.enter)="saveEdit(editTaskField, task.id)" (keydown.escape)="cancelEdit(task.id)" #editTaskField>
+  <button class="btn-primary" (click)="saveEdit(editTaskField, task.id)">Save</button>
+  <button class="btn-primary" (click)="cancelEdit(task.id)">Cancel</button>
 </div>
 
 

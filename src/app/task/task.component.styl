@@ -4,3 +4,25 @@ p
   display: none
 .checkbox
   margin: 0 0 5px 5px
+
+.task-block
+  display: flex
+  justify-content: space-between
+  align-items flex-end
+  width: 100%
+  height: auto
+  margin: 10px 0
+  &>p
+    margin-left: 10px
+    margin-right: auto
+
+
+.completed
+  &> p
+    color #ababab
+    text-decoration line-through
+.notCompleted
+  background-color transparent
+  &> p
+    text-decoration none
+

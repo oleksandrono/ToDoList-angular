@@ -18,6 +18,11 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
   }
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
 
   deleteTask(taskId: any) {
     this.tasks.forEach((element, index) => {
@@ -25,13 +30,7 @@ export class TaskComponent implements OnInit {
         this.tasks.splice(index, 1);
         document.getElementById('task' + element.id).remove();
 
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type':  'application/json'
-          })
-        };
-
-        this.http.delete(`http://localhost:3000/tasks/${element.id}`, httpOptions)
+        this.http.delete(`http://localhost:3000/tasks/${element.id}`, this.httpOptions)
           .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
       }
     });
@@ -55,11 +54,7 @@ export class TaskComponent implements OnInit {
           document.getElementById(`defaultButtons${taskId}`).style.display = 'flex';
           document.getElementById(`editButtons${taskId}`).style.display = 'none';
 
-          const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json'
-            })
-          };
+
           let task = {
             id: element.id,
             taskName: editTaskField.value,
@@ -67,7 +62,7 @@ export class TaskComponent implements OnInit {
             listId: element.listId
           };
 
-          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, httpOptions)
+          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
 
         }
@@ -82,18 +77,40 @@ export class TaskComponent implements OnInit {
 
 
   isCompleted($event, taskId: any) {
-    if ($event.target.checked) {
-      document.getElementById(`task${taskId}`).style.backgroundColor = '#d2d2d2';
-      document.getElementById(`taskName${taskId}`).style.textDecoration = 'line-through';
-      document.getElementById(`editTask${taskId}`).setAttribute('disabled', 'true');
-      document.getElementById(`deleteTask${taskId}`).setAttribute('disabled', 'true');
-    } else {
-      document.getElementById(`task${taskId}`).style.backgroundColor = 'transparent';
-      document.getElementById(`taskName${taskId}`).style.textDecoration = 'none';
-      document.getElementById(`editTask${taskId}`).removeAttribute('disabled');
-      document.getElementById(`deleteTask${taskId}`).removeAttribute('disabled');
-    }
+    this.tasks.forEach((element)=>{
+      if(element.id===taskId){
+        if ($event.target.checked) {
+          let task = {
+            id: element.id,
+            taskName: element.taskName,
+            done: true,
+            listId: element.listId
+          };
+
+          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
+            .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
 
 
+          document.getElementById(`taskName${taskId}`).style.textDecoration = 'line-through';
+          document.getElementById(`taskName${taskId}`).style.color = '#ababab';
+        }
+        else {
+          let task = {
+            id: element.id,
+            taskName: element.taskName,
+            done: false,
+            listId: element.listId
+          };
+
+          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
+            .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
+
+          document.getElementById(`taskName${taskId}`).style.textDecoration = 'none';
+          document.getElementById(`taskName${taskId}`).style.color = '#000000';
+        }
+      }
+    });
   }
+
+
 }

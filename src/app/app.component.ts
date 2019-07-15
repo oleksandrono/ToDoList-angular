@@ -23,6 +23,11 @@ export class AppComponent implements OnInit {
 
   currentListId;
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
 
   ngOnInit(): void {
     this.http.get('http://localhost:3000/lists').subscribe((data: List[]) => {
@@ -65,14 +70,8 @@ export class AppComponent implements OnInit {
       this.lists.push(list);
       inputListName.value = '';
 
-      // ____________________post
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json'
-        })
-      };
 
-      this.http.post('http://localhost:3000/lists', list, httpOptions)
+      this.http.post('http://localhost:3000/lists', list, this.httpOptions)
         .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
     }
   }
@@ -117,13 +116,8 @@ export class AppComponent implements OnInit {
       this.tasks.push(task);
       inputTaskName.value = '';
 
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json'
-        })
-      };
 
-      this.http.post('http://localhost:3000/tasks', task, httpOptions)
+      this.http.post('http://localhost:3000/tasks', task, this.httpOptions)
         .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
 
     }

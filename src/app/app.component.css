@@ -17,14 +17,6 @@ main {
 .tasks-block {
   width: 65%;
 }
-app-task {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-  height: auto;
-  margin: 10px 0;
-}
 ul {
   list-style: none;
   padding: 0;

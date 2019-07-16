@@ -1,0 +1,6 @@
+<form action="POST" id="addForm" class="add-form" (submit)="add($event, inputName)">
+  <input id="NameField" class="name_input form-control" type="text" placeholder="name"
+         #inputName>
+  <input id="addSubmit" class="button btn-primary" type="submit" value="Add"
+         (click)="add($event, inputName)">
+</form>

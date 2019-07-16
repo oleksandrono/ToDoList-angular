@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
 
   currentListId;
 
-  httpOptions = {
+  /*httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
     })
-  };
+  };*/
 
   ngOnInit(): void {
     this.http.get('http://localhost:3000/lists').subscribe((data: List[]) => {
@@ -36,10 +36,9 @@ export class AppComponent implements OnInit {
     this.http.get('http://localhost:3000/tasks').subscribe((data: Task[]) => {
       this.tasks = data;
     });
-
   }
 
-  addList($event, inputListName: HTMLInputElement) {
+/*  addList($event, inputListName: HTMLInputElement) {
     $event.preventDefault();
 
     if (inputListName.value === ' ' || inputListName.value.length < 1) {
@@ -74,9 +73,10 @@ export class AppComponent implements OnInit {
       this.http.post('http://localhost:3000/lists', list, this.httpOptions)
         .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
     }
-  }
+  }*/
 
   chooseList(listId: any, listName: any) {
+
     this.currentListId = listId;
     document.getElementById('listNameText').innerText = `, in ${listName}.`;
     document.getElementById('task-container').style.display = 'block';
@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  addTask($event, inputTaskName: HTMLInputElement) {
+  /*addTask($event, inputTaskName: HTMLInputElement) {
     $event.preventDefault();
 
     if (inputTaskName.value === ' ' || inputTaskName.value.length < 1) {
@@ -121,6 +121,6 @@ export class AppComponent implements OnInit {
         .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
 
     }
-  }
+  }*/
 
 }

@@ -25,7 +25,7 @@
     {
       "id": 3,
       "taskName": "Buy 1 milk.",
-      "done": false,
+      "done": true,
       "listId": 2
     }
   ]

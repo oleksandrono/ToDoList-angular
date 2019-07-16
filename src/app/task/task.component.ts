@@ -48,23 +48,28 @@ export class TaskComponent implements OnInit {
     }
     else {
       this.tasks.forEach((element, index) => {
-        if (element.id === taskId) {
-          element.taskName = editTaskField.value;
-          document.getElementById(`taskName${taskId}`).innerText = editTaskField.value;
-          document.getElementById(`defaultButtons${taskId}`).style.display = 'flex';
-          document.getElementById(`editButtons${taskId}`).style.display = 'none';
+        if(element.taskName===editTaskField.value){
+          this.cancelEdit(element.id);
+        }
+        else {
+          if (element.id === taskId) {
+            element.taskName = editTaskField.value;
+            document.getElementById(`taskName${taskId}`).innerText = editTaskField.value;
+            document.getElementById(`defaultButtons${taskId}`).style.display = 'flex';
+            document.getElementById(`editButtons${taskId}`).style.display = 'none';
 
 
-          let task = {
-            id: element.id,
-            taskName: editTaskField.value,
-            done: element.done,
-            listId: element.listId
-          };
+            let task = {
+              id: element.id,
+              taskName: editTaskField.value,
+              done: element.done,
+              listId: element.listId
+            };
 
-          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
-            .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
+            this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
+              .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
 
+          }
         }
       });
     }
@@ -89,7 +94,6 @@ export class TaskComponent implements OnInit {
 
           this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
-
 
           document.getElementById(`taskName${taskId}`).style.textDecoration = 'line-through';
           document.getElementById(`taskName${taskId}`).style.color = '#ababab';

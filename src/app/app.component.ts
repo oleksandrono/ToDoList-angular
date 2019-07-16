@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
 
   currentListId;
 
-  /*httpOptions = {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
     })
-  };*/
+  };
 
   ngOnInit(): void {
     this.http.get('http://localhost:3000/lists').subscribe((data: List[]) => {
@@ -38,42 +38,65 @@ export class AppComponent implements OnInit {
     });
   }
 
-/*  addList($event, inputListName: HTMLInputElement) {
-    $event.preventDefault();
-
-    if (inputListName.value === ' ' || inputListName.value.length < 1) {
-      console.log('field must be not empty');
+  onSubmitList(inputName: string){
+    let idList = [];
+    if (this.lists.length > 0) {
+      this.lists.forEach((element, index) => {
+        idList.push(element.id);
+      });
     }
-    else {
-      let idList = [];
-      if (this.lists.length > 0) {
-        this.lists.forEach((element, index) => {
-          idList.push(element.id);
-        });
-      }
 
-      let listId = 1;
-      if (this.lists.length === 0) {
-        listId = 1;
-      }
-      else if (this.lists.length > 0) {
-        for (let i = 1; i <= this.lists.length; i++) {
-          listId = Math.max.apply(null, idList) + 1;
-        }
-      }
-
-      const list = {
-        id: listId,
-        listName: inputListName.value
-      };
-      this.lists.push(list);
-      inputListName.value = '';
-
-
-      this.http.post('http://localhost:3000/lists', list, this.httpOptions)
-        .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+    let listId = 1;
+    if (this.lists.length === 0) {
+      listId = 1;
     }
-  }*/
+    else if (this.lists.length > 0) {
+      for (let i = 1; i <= this.lists.length; i++) {
+        listId = Math.max.apply(null, idList) + 1;
+      }
+    }
+
+    const list = {
+      id: listId,
+      listName: inputName
+    };
+    this.lists.push(list);
+
+
+    this.http.post('http://localhost:3000/lists', list, this.httpOptions)
+      .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+  }
+
+  onSubmitTask(inputName: string){
+    const idList = [];
+    if (this.tasks.length > 0) {
+      this.tasks.forEach((element, index) => {
+        idList.push(element.id);
+      });
+    }
+    let taskId = 1;
+    if (this.tasks.length === 0) {
+      taskId = 1;
+    } else if (this.tasks.length > 0) {
+      for (let i = 1; i <= this.tasks.length; i++) {
+        taskId = Math.max.apply(null, idList) + 1;
+      }
+    }
+
+
+    const task = {
+      id: taskId,
+      taskName: inputName,
+      done: false,
+      listId: this.currentListId
+    };
+
+    this.tasks.push(task);
+
+
+    this.http.post('http://localhost:3000/tasks', task, this.httpOptions)
+      .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+  }
 
   chooseList(listId: any, listName: any) {
 
@@ -82,45 +105,5 @@ export class AppComponent implements OnInit {
     document.getElementById('task-container').style.display = 'block';
     document.getElementById('tasksHint').style.display = 'none';
   }
-
-
-  /*addTask($event, inputTaskName: HTMLInputElement) {
-    $event.preventDefault();
-
-    if (inputTaskName.value === ' ' || inputTaskName.value.length < 1) {
-      console.log('field must be not empty');
-    } else {
-      const idList = [];
-      if (this.tasks.length > 0) {
-        this.tasks.forEach((element, index) => {
-          idList.push(element.id);
-        });
-      }
-      let taskId = 1;
-      if (this.tasks.length === 0) {
-        taskId = 1;
-      } else if (this.tasks.length > 0) {
-        for (let i = 1; i <= this.tasks.length; i++) {
-          taskId = Math.max.apply(null, idList) + 1;
-        }
-      }
-
-
-      const task = {
-        id: taskId,
-        taskName: inputTaskName.value,
-        done: false,
-        listId: this.currentListId
-      };
-
-      this.tasks.push(task);
-      inputTaskName.value = '';
-
-
-      this.http.post('http://localhost:3000/tasks', task, this.httpOptions)
-        .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
-
-    }
-  }*/
 
 }

@@ -16,14 +16,9 @@
         </ul>
 
         <div class="add-list" id="addList">
-          <!--<form action="POST" id="addListForm" class="add-task-form" (submit)="addList($event, inputListName)">
-            <input id="listNameField" class="list_name_input form-control" type="text" placeholder="List name"
-                   #inputListName>
-            <input id="addListSubmit" class="button btn-primary" type="submit" value="Add list"
-                   (click)="addList($event, inputListName)">
-          </form>-->
           <app-form
-
+            (onSubmit)="onSubmitList($event)"
+            [name]="'list'"
           ></app-form>
         </div>
       </div>
@@ -41,14 +36,9 @@
             ></app-task>
           </div>
           <div class="add_task" id="addTask">
-            <!--<form action="POST" id="addTaskForm" class="add-task-form" (submit)="addTask($event, inputTaskName)">
-              <input id="taskNameField" class="task_name_input form-control" type="text" placeholder="Task name"
-                     #inputTaskName>
-              <input id="addTaskSubmit" class="button btn-primary" type="submit" value="Add task"
-                     (click)="addTask($event, inputTaskName)">
-            </form>-->
             <app-form
-
+              (onSubmit)="onSubmitTask($event)"
+              [name]="'task'"
             ></app-form>
           </div>
         </div>

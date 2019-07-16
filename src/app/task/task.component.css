@@ -20,12 +20,16 @@ p {
   margin-right: auto;
 }
 .completed> p {
-  color: #ababab;
-  text-decoration: line-through;
-}
-.notCompleted {
-  background-color: transparent;
+  color: #ababab !important;
+  text-decoration: line-through !important;
 }
 .notCompleted> p {
+  color: #000;
   text-decoration: none;
+}
+.isVisible {
+  display: flex;
+}
+.isHidden {
+  display: none;
 }

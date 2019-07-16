@@ -19,10 +19,14 @@ p
 
 .completed
   &> p
-    color #ababab
-    text-decoration line-through
+    color #ababab!important
+    text-decoration: line-through!important
 .notCompleted
-  background-color transparent
   &> p
+    color #000000
     text-decoration none
 
+.isVisible
+  display: flex
+.isHidden
+  display: none

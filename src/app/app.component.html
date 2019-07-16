@@ -11,6 +11,7 @@
               [list]="list"
               [lists]="lists"
               [currentListId] = "currentListId"
+              (onDelete)="onDelete($event)"
             ></app-list>
           </li>
         </ul>
@@ -18,15 +19,15 @@
         <div class="add-list" id="addList">
           <app-form
             (onSubmit)="onSubmitList($event)"
-            [name]="'list'"
+            name="list"
           ></app-form>
         </div>
       </div>
 
       <div class="tasks-block">
-        <h2>Tasks<span id="listNameText"></span></h2>
-        <p id="tasksHint">Choose or create list</p>
-        <div id="task-container">
+        <h2>Tasks<span id="listNameText" *ngIf="isListChosen">, in {{currentListName}}</span></h2>
+        <p id="tasksHint" *ngIf="!isListChosen || isDelete">Choose or create list</p>
+        <div id="task-container" *ngIf="isListChosen || !isDelete" [class.isHidden]="firstLoad">
           <div id="task{{task.id}}" class="task" *ngFor="let task of tasks">
             <app-task
               [task]="task"
@@ -38,7 +39,7 @@
           <div class="add_task" id="addTask">
             <app-form
               (onSubmit)="onSubmitTask($event)"
-              [name]="'task'"
+              name="task"
             ></app-form>
           </div>
         </div>

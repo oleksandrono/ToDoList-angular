@@ -3,10 +3,6 @@
     {
       "id": 1,
       "listName": "InCamp"
-    },
-    {
-      "id": 2,
-      "listName": "Products"
     }
   ],
   "tasks": [
@@ -15,18 +11,6 @@
       "taskName": "Review ToDo list on angular.",
       "done": false,
       "listId": 1
-    },
-    {
-      "id": 2,
-      "taskName": "Buy 2 bred.",
-      "done": false,
-      "listId": 2
-    },
-    {
-      "id": 3,
-      "taskName": "Buy 1 milk.",
-      "done": true,
-      "listId": 2
     }
   ]
 }

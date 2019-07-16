@@ -1,17 +1,19 @@
-<div class="task-block" id="taskBlock{{task.id}}" [class.completed]="task.done" [class.notCompleted]="!task.done">
+<div class="task-block" id="taskBlock{{task.id}}" [ngClass]="{completed: isChecked, notCompleted: !isChecked}" *ngIf="!isDelete">
   <input type="checkbox" class="checkbox" id="checkbox{{task.id}}"
          (change)="isCompleted($event, task.id)"
          [checked]="task.done"
   >
-  <p id="taskName{{task.id}}" >{{task.taskName}}</p>
-  <div class="buttons-group" id="defaultButtons{{task.id}}">
-    <button class="btn-primary" id="editTask{{task.id}}" (click)="editTask(editTaskField, task.id)">Edit</button>
+
+  <p id="taskName{{task.id}}">{{task.taskName}}</p>
+
+  <div class="buttons-group default-buttons" id="defaultButtons{{task.id}}" [ngClass]="{isHidden: isEdit}">
+    <button class="btn-primary" id="editTask{{task.id}}" (click)="editTask(editTaskField)">Edit</button>
     <button class="btn-primary" id="deleteTask{{task.id}}" (click)="deleteTask(task.id)">Delete</button>
   </div>
-  <div class="edit-task buttons-group" id="editButtons{{task.id}}">
-    <input type="text" id="editTaskField{{task.id}}" (keydown.enter)="saveEdit(editTaskField, task.id)" (keydown.escape)="cancelEdit(task.id)" #editTaskField>
+  <div class="buttons-group edit-task" id="editButtons{{task.id}}" [ngClass]="{isVisible: isEdit}">
+    <input type="text" id="editTaskField{{task.id}}" (keydown.enter)="saveEdit(editTaskField, task.id)" (keydown.escape)="cancelEdit()" #editTaskField>
     <button class="btn-primary" (click)="saveEdit(editTaskField, task.id)">Save</button>
-    <button class="btn-primary" (click)="cancelEdit(task.id)">Cancel</button>
+    <button class="btn-primary" (click)="cancelEdit()" >Cancel</button>
   </div>
 </div>
 

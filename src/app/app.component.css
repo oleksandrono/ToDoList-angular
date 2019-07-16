@@ -32,7 +32,13 @@ li:hover {
   cursor: pointer;
 }
 #task-container {
-  display: none;
+  visibility: visible;
+}
+.isHidden {
+  visibility: hidden !important;
+}
+.isVisible {
+  visibility: visible !important;
 }
 .del {
   width: 100%;

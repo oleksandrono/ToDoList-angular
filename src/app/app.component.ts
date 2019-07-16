@@ -22,6 +22,10 @@ export class AppComponent implements OnInit {
   title = 'ToDoList App Angular';
 
   currentListId;
+  currentListName;
+  isDelete;
+  isListChosen;
+  firstLoad = true;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -99,11 +103,15 @@ export class AppComponent implements OnInit {
   }
 
   chooseList(listId: any, listName: any) {
-
+    this.firstLoad = false;
+    this.isDelete = false;
+    this.isListChosen = true;
     this.currentListId = listId;
-    document.getElementById('listNameText').innerText = `, in ${listName}.`;
-    document.getElementById('task-container').style.display = 'block';
-    document.getElementById('tasksHint').style.display = 'none';
+    this.currentListName = listName;
   }
 
+  onDelete(value: boolean) {
+    this.isDelete = value;
+    this.isListChosen = false;
+  }
 }

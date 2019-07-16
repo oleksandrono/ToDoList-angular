@@ -12,10 +12,20 @@ export class TaskComponent implements OnInit {
   @Input() tasks;
   @Input() currentListId;
 
+  isEdit;
+  isChecked;
+  isDelete;
+
   constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
+    if(this.task.done){
+      this.isChecked = true;
+    }
+    else if(!this.task.done){
+      this.isChecked = false;
+    }
   }
 
   httpOptions = {
@@ -25,10 +35,10 @@ export class TaskComponent implements OnInit {
   };
 
   deleteTask(taskId: any) {
+    this.isDelete = true;
     this.tasks.forEach((element, index) => {
       if (element.id === taskId) {
         this.tasks.splice(index, 1);
-        document.getElementById('task' + element.id).remove();
 
         this.http.delete(`http://localhost:3000/tasks/${element.id}`, this.httpOptions)
           .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
@@ -36,28 +46,28 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  editTask(editTaskField: HTMLInputElement, taskId: any) {
-    document.getElementById(`defaultButtons${taskId}`).style.display = 'none';
-    document.getElementById(`editButtons${taskId}`).style.display = 'flex';
+  editTask(editTaskField: HTMLInputElement) {
+    this.isEdit = true;
     editTaskField.value = this.task.taskName;
   }
 
   saveEdit(editTaskField: HTMLInputElement, taskId: any) {
+    this.isEdit = false;
     if (editTaskField.value === ' ' || editTaskField.value.length < 1) {
       console.log('field must be not empty');
     }
     else {
-      this.tasks.forEach((element, index) => {
+      this.tasks.forEach((element) => {
         if(element.taskName===editTaskField.value){
-          this.cancelEdit(element.id);
+          this.cancelEdit();
         }
         else {
           if (element.id === taskId) {
             element.taskName = editTaskField.value;
-            document.getElementById(`taskName${taskId}`).innerText = editTaskField.value;
-            document.getElementById(`defaultButtons${taskId}`).style.display = 'flex';
-            document.getElementById(`editButtons${taskId}`).style.display = 'none';
 
+            //________________fix here maybe
+            document.getElementById(`taskName${taskId}`).innerText = editTaskField.value;
+            //________________fix here maybe
 
             let task = {
               id: element.id,
@@ -68,18 +78,15 @@ export class TaskComponent implements OnInit {
 
             this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
               .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
-
           }
         }
       });
     }
   }
 
-  cancelEdit(taskId: any) {
-    document.getElementById(`defaultButtons${taskId}`).style.display = 'flex';
-    document.getElementById(`editButtons${taskId}`).style.display = 'none';
+  cancelEdit() {
+    this.isEdit = false;
   }
-
 
   isCompleted($event, taskId: any) {
     this.tasks.forEach((element)=>{
@@ -92,11 +99,11 @@ export class TaskComponent implements OnInit {
             listId: element.listId
           };
 
+          this.isChecked = true;
+          console.log(this.isChecked);
+
           this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
-
-          document.getElementById(`taskName${taskId}`).style.textDecoration = 'line-through';
-          document.getElementById(`taskName${taskId}`).style.color = '#ababab';
         }
         else {
           let task = {
@@ -106,11 +113,11 @@ export class TaskComponent implements OnInit {
             listId: element.listId
           };
 
+          this.isChecked = false;
+          console.log(this.isChecked);
+
           this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
-
-          document.getElementById(`taskName${taskId}`).style.textDecoration = 'none';
-          document.getElementById(`taskName${taskId}`).style.color = '#000000';
         }
       }
     });

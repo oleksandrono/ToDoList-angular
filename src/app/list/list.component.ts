@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
@@ -12,7 +12,9 @@ export class ListComponent implements OnInit {
   @Input() lists;
   @Input() currentListId;
 
+  isDelete;
 
+  @Output() onDelete = new EventEmitter();
 
   constructor(private http: HttpClient) {}
 
@@ -26,16 +28,15 @@ export class ListComponent implements OnInit {
   };
 
   deleteList($event, listId: any) {
+
+    this.isDelete = true;
+
+    this.onDelete.emit(true);
+
     $event.preventDefault();
     this.lists.forEach((element, index) => {
       if (element.id === listId) {
         this.lists.splice(index, 1);
-        document.getElementById('list' + element.id).remove();
-
-        document.getElementById('task-container').style.display = 'none';
-        document.getElementById('tasksHint').style.display = 'block';
-        document.getElementById('listNameText').style.visibility = 'hidden';
-
 
         this.http.delete(`http://localhost:3000/lists/${element.id}`, this.httpOptions)
           .subscribe(() => console.log('DELETE is successful'), error => console.error(error));

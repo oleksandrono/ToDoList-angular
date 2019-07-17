@@ -15,6 +15,7 @@ export class TaskComponent implements OnInit {
   isEdit;
   isChecked;
   isDelete;
+  isListDelete;
 
   constructor(private taskService: TaskServiceService) {
   }

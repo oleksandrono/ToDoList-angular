@@ -18,6 +18,7 @@ export class ListContainerComponent implements OnInit {
   isListChosen;
   isFirstLoad = true;
 
+
   @Output() getListData = new EventEmitter();
 
   constructor(private listService: ListServiceService) { }
@@ -72,15 +73,26 @@ export class ListContainerComponent implements OnInit {
 
   }
 
-  onDelete(value: boolean) {
-    this.isListDelete = value;
-    this.isListChosen = false;
 
+  deleteList($event, listId){
+    this.isListDelete = true;
+
+    $event.preventDefault();
+    this.lists.forEach((element, index) => {
+      if (element.id === listId) {
+        this.lists.splice(index, 1);
+
+        this.listService.deleteList(element.id)
+          .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
+      }
+    });
+
+    this.isListDelete = true;
+    this.isListChosen = false;
     this.getListData.emit({
       'isListChosen': this.isListChosen,
       'isListDelete': this.isListDelete
     });
-
   }
 
 }

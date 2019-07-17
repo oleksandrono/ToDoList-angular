@@ -13,10 +13,11 @@ export class TaskContainerComponent implements OnInit {
 
   @Input() getListData;
 
-  constructor(private taskService: TaskServiceService) { }
+  constructor(private taskService: TaskServiceService) {
+  }
 
   ngOnInit() {
-   this.taskService.getTasks()
+    this.taskService.getTasks()
      .subscribe((data: Task[]) => this.tasks = data);
   }
 

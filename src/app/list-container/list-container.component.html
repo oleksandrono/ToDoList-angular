@@ -3,11 +3,10 @@
   <ul>
     <li *ngFor="let list of lists" id="list{{list.id}}" (click)="chooseList(list.id, list.listName)">
       <app-list
+        (contextmenu)="deleteList($event, list.id)"
         [list]="list"
-        [lists]="lists"
-        [currentListId] = "currentListId"
-        (onDelete)="onDelete($event)"
       ></app-list>
+
     </li>
   </ul>
   <div class="add-list" id="addList">

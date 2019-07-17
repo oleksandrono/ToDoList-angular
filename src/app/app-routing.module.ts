@@ -1,7 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {HomePageComponent} from "./home-page/home-page.component";
+import {TodolistComponent} from "./todolist/todolist.component";
+import {PagenotfoundComponent} from "./pagenotfound/pagenotfound.component";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: HomePageComponent
+  },
+  {
+    path: 'todolist',
+    component: TodolistComponent
+  },
+  {
+    path: '**',
+    component: PagenotfoundComponent
+  }
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

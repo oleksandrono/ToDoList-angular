@@ -28,13 +28,11 @@ export class TaskComponent implements OnInit {
     }
   }
 
-
   deleteTask(taskId: any) {
     this.isDelete = true;
     this.tasks.forEach((element, index) => {
       if (element.id === taskId) {
         this.tasks.splice(index, 1);
-
 
         this.taskService.deleteTask(element.id)
           .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
@@ -60,10 +58,6 @@ export class TaskComponent implements OnInit {
         else {
           if (element.id === taskId) {
             element.taskName = editTaskField.value;
-
-            //________________fix here maybe
-            document.getElementById(`taskName${taskId}`).innerText = editTaskField.value;
-            //________________fix here maybe
 
             let task = {
               id: element.id,
@@ -116,6 +110,5 @@ export class TaskComponent implements OnInit {
       }
     });
   }
-
 
 }

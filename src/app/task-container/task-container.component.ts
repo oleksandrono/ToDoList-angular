@@ -17,9 +17,7 @@ export class TaskContainerComponent implements OnInit {
 
   ngOnInit() {
    this.taskService.getTasks()
-      .subscribe((data: Task[]) => {
-      this.tasks = data;
-    });
+     .subscribe((data: Task[]) => this.tasks = data);
   }
 
   onSubmitTask(inputName: string){

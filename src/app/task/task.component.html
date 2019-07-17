@@ -4,14 +4,14 @@
          [checked]="task.done"
   >
 
-  <p id="taskName{{task.id}}">{{task.taskName}}</p>
+  <p id="taskName{{task.id}}" *ngIf="!isEdit">{{task.taskName}}</p>
 
   <div class="buttons-group default-buttons" id="defaultButtons{{task.id}}" [ngClass]="{isHidden: isEdit}">
     <button class="btn-primary" id="editTask{{task.id}}" (click)="editTask(editTaskField)">Edit</button>
     <button class="btn-primary" id="deleteTask{{task.id}}" (click)="deleteTask(task.id)">Delete</button>
   </div>
   <div class="buttons-group edit-task" id="editButtons{{task.id}}" [ngClass]="{isVisible: isEdit}">
-    <input type="text" id="editTaskField{{task.id}}" (keydown.enter)="saveEdit(editTaskField, task.id)" (keydown.escape)="cancelEdit()" #editTaskField>
+    <input type="text" class="edit-task-input form-control" id="editTaskField{{task.id}}" (keydown.enter)="saveEdit(editTaskField, task.id)" (keydown.escape)="cancelEdit()" #editTaskField>
     <button class="btn-primary" (click)="saveEdit(editTaskField, task.id)">Save</button>
     <button class="btn-primary" (click)="cancelEdit()" >Cancel</button>
   </div>

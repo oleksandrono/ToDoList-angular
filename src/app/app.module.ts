@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { TodolistComponent } from './todolist/todolist.component';
 import { ListComponent } from './list/list.component';
 import { TaskComponent } from './task/task.component';
 import {FormsModule} from '@angular/forms';
@@ -15,6 +17,7 @@ import { TaskContainerComponent } from './task-container/task-container.componen
 
 import {TaskServiceService} from "./services/task-service.service";
 import {ListServiceService} from "./services/list-service.service";
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import {ListServiceService} from "./services/list-service.service";
     FormComponent,
     ListContainerComponent,
     TaskContainerComponent,
+    HomePageComponent,
+    TodolistComponent,
+    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,

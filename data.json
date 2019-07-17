@@ -2,13 +2,19 @@
   "lists": [
     {
       "id": 1,
-      "listName": "InCamp"
+      "listName": "Products"
     }
   ],
   "tasks": [
     {
       "id": 1,
-      "taskName": "Review ToDoList App on Angular.",
+      "taskName": "Buy 1 bred.",
+      "done": false,
+      "listId": 1
+    },
+    {
+      "id": 2,
+      "taskName": "Buy 1 milk.",
       "done": false,
       "listId": 1
     }

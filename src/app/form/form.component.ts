@@ -7,15 +7,14 @@ import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 })
 export class FormComponent implements OnInit {
 
+  inputNotValid;
+
+  @Input() name;
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  inputNotValid;
-
-  @Input() name;
 
   @Output() onSubmit = new EventEmitter();
 
@@ -30,6 +29,8 @@ export class FormComponent implements OnInit {
     else{
       this.inputNotValid = false;
       this.onSubmit.emit(inputName.value);
+
+      //___fix here?
       inputName.value = '';
     }
 

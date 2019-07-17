@@ -10,24 +10,24 @@ export class AppComponent implements OnInit {
 
   constructor() {}
 
-  title = 'ToDoList App Angular';
-
-  currentListId;
-  currentListName;
-  isListDelete;
-  isListChosen;
-  isFirstLoad = true;
+  // title = 'ToDoList App Angular';
+  //
+  // currentListId;
+  // currentListName;
+  // isListDelete;
+  // isListChosen;
+  // isFirstLoad = true;
 
 
   ngOnInit(): void {
   }
 
-  getListData(_listData: any){
-    this.currentListId = _listData.currentListId;
-    this.currentListName = _listData.currentListName;
-    this.isListChosen = _listData.isListChosen;
-    this.isListDelete = _listData.isListDelete;
-    this.isFirstLoad = _listData.isFirstLoad;
-  }
+  // getListData(_listData: any){
+  //   this.currentListId = _listData.currentListId;
+  //   this.currentListName = _listData.currentListName;
+  //   this.isListChosen = _listData.isListChosen;
+  //   this.isListDelete = _listData.isListDelete;
+  //   this.isFirstLoad = _listData.isFirstLoad;
+  // }
 
 }

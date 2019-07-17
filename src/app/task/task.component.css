@@ -33,3 +33,7 @@ p {
 .isHidden {
   display: none;
 }
+.edit-task-input {
+  height: auto;
+  padding: 0 5px !important;
+}

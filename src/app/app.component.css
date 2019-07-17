@@ -7,16 +7,3 @@
   height: auto;
   margin: 0 auto;
 }
-main {
-  display: flex;
-  justify-content: space-between;
-}
-app-list-container {
-  width: 28%;
-}
-app-task-container {
-  width: 68%;
-}
-.del {
-  width: 100%;
-}

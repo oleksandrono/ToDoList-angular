@@ -1,23 +1,5 @@
 <div class="wrapper">
   <div class="container">
-    <h1>{{ title }}</h1>
-    <hr>
-    <main>
-
-      <app-list-container
-        (getListData)="getListData($event)"
-      ></app-list-container>
-
-      <app-task-container
-        [getListData]="{
-          'currentListId': currentListId,
-          'currentListName': currentListName,
-          'isListChosen': isListChosen,
-          'isListDelete': isListDelete,
-          'isFirstLoad': isFirstLoad
-        }"
-      ></app-task-container>
-
-    </main>
+    <router-outlet></router-outlet>
   </div>
 </div>

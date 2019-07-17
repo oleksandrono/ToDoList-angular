@@ -1,0 +1,24 @@
+
+<h1>{{title}}</h1>
+
+<div class="home-page">
+  <a routerLink="/">Home page</a>
+</div>
+<hr>
+<main>
+
+  <app-list-container
+    (getListData)="getListData($event)"
+  ></app-list-container>
+
+  <app-task-container
+    [getListData]="{
+          'currentListId': currentListId,
+          'currentListName': currentListName,
+          'isListChosen': isListChosen,
+          'isListDelete': isListDelete,
+          'isFirstLoad': isFirstLoad
+        }"
+  ></app-task-container>
+
+</main>

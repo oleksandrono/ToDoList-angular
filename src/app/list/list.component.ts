@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ListServiceService} from "../services/list-service.service";
 
 @Component({
   selector: 'app-list',
@@ -16,16 +16,10 @@ export class ListComponent implements OnInit {
 
   @Output() onDelete = new EventEmitter();
 
-  constructor(private http: HttpClient) {}
+  constructor(private listService: ListServiceService) {}
 
   ngOnInit() {
   }
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
 
   deleteList($event, listId: any) {
 
@@ -38,7 +32,7 @@ export class ListComponent implements OnInit {
       if (element.id === listId) {
         this.lists.splice(index, 1);
 
-        this.http.delete(`http://localhost:3000/lists/${element.id}`, this.httpOptions)
+        this.listService.deleteList(element.id)
           .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
       }
     });

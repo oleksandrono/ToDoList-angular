@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {List} from "../list";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+
+import {ListServiceService} from "../services/list-service.service";
 
 @Component({
   selector: 'app-list-container',
@@ -17,22 +18,14 @@ export class ListContainerComponent implements OnInit {
   isListChosen;
   isFirstLoad = true;
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
-
   @Output() getListData = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private listService: ListServiceService) { }
 
   ngOnInit() {
-    this.http.get('http://localhost:3000/lists').subscribe((data: List[]) => {
-      this.lists = data;
-    });
+    this.listService.getLists()
+      .subscribe((data: List[]) => this.lists = data);
   }
-
 
   onSubmitList(inputName: string){
     let idList = [];
@@ -58,8 +51,7 @@ export class ListContainerComponent implements OnInit {
     };
     this.lists.push(list);
 
-
-    this.http.post('http://localhost:3000/lists', list, this.httpOptions)
+    this.listService.addList(list)
       .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
   }
 

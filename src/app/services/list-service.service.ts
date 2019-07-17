@@ -6,19 +6,28 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class ListServiceService {
 
+  httpOptions;
+  urlList;
+
   constructor(private http: HttpClient) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    this.urlList = 'http://localhost:3000/lists';
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
+  getLists(){
+    return this.http.get(this.urlList);
+  }
 
-  urlList = 'http://localhost:3000/lists';
+  addList(list){
+    return this.http.post(this.urlList, list, this.httpOptions);
+  }
 
-  // addList(list){
-  //   return this.http.post(this.urlList, list, this.httpOptions);
-  // }
+  deleteList(elementId){
+    return this.http.delete(`${this.urlList}/${elementId}`, this.httpOptions)
+  }
 
 }

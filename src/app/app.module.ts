@@ -10,10 +10,11 @@ import {FormsModule} from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './form/form.component';
-import {TaskSeviceService} from "./services/task-sevice.service";
-import {ListServiceService} from "./services/list-service.service";
 import { ListContainerComponent } from './list-container/list-container.component';
 import { TaskContainerComponent } from './task-container/task-container.component';
+
+import {TaskServiceService} from "./services/task-service.service";
+import {ListServiceService} from "./services/list-service.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { TaskContainerComponent } from './task-container/task-container.componen
   ],
   providers: [
     ListServiceService,
-    TaskSeviceService
+    TaskServiceService
   ],
   bootstrap: [AppComponent]
 })

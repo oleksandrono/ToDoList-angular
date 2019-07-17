@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {TaskServiceService} from "../services/task-service.service";
 
 @Component({
   selector: 'app-task',
@@ -16,7 +16,7 @@ export class TaskComponent implements OnInit {
   isChecked;
   isDelete;
 
-  constructor(private http: HttpClient) {
+  constructor(private taskService: TaskServiceService) {
   }
 
   ngOnInit() {
@@ -28,11 +28,6 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
 
   deleteTask(taskId: any) {
     this.isDelete = true;
@@ -40,7 +35,8 @@ export class TaskComponent implements OnInit {
       if (element.id === taskId) {
         this.tasks.splice(index, 1);
 
-        this.http.delete(`http://localhost:3000/tasks/${element.id}`, this.httpOptions)
+
+        this.taskService.deleteTask(element.id)
           .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
       }
     });
@@ -76,7 +72,7 @@ export class TaskComponent implements OnInit {
               listId: element.listId
             };
 
-            this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
+            this.taskService.putTask(element.id, task)
               .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
           }
         }
@@ -101,7 +97,7 @@ export class TaskComponent implements OnInit {
 
           this.isChecked = true;
 
-          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
+          this.taskService.putTask(element.id, task)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
         }
         else {
@@ -114,7 +110,7 @@ export class TaskComponent implements OnInit {
 
           this.isChecked = false;
 
-          this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
+          this.taskService.putTask(element.id, task)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
         }
       }

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../task";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {TaskServiceService} from "../services/task-service.service";
 
 @Component({
   selector: 'app-task-container',
@@ -13,19 +13,11 @@ export class TaskContainerComponent implements OnInit {
 
   @Input() getListData;
 
-  urlTasks = 'http://localhost:3000/tasks';
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
-
-
-  constructor(private http: HttpClient) { }
+  constructor(private taskService: TaskServiceService) { }
 
   ngOnInit() {
-    this.http.get(this.urlTasks).subscribe((data: Task[]) => {
+   this.taskService.getTasks()
+      .subscribe((data: Task[]) => {
       this.tasks = data;
     });
   }
@@ -55,7 +47,7 @@ export class TaskContainerComponent implements OnInit {
 
     this.tasks.push(task);
 
-    this.http.post('http://localhost:3000/tasks', task, this.httpOptions)
+    this.taskService.addTask(task)
       .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
   }
 

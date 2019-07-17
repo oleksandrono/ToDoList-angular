@@ -23,11 +23,7 @@ export class ListContainerComponent implements OnInit {
     })
   };
 
-  @Output() getCurrentListId = new EventEmitter();
-  @Output() getCurrentListName = new EventEmitter();
-  @Output() getIsListChosen = new EventEmitter();
-  @Output() getIsListDelete = new EventEmitter();
-  @Output() getIsFirstLoad = new EventEmitter();
+  @Output() getListData = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -74,19 +70,25 @@ export class ListContainerComponent implements OnInit {
     this.isListDelete = false;
     this.isListChosen = true;
 
-    this.getCurrentListId.emit(this.currentListId);
-    this.getCurrentListName.emit(this.currentListName);
-    this.getIsListChosen.emit(this.isListChosen);
-    this.getIsListDelete.emit(this.isListDelete);
-    this.getIsFirstLoad.emit(this.isFirstLoad);
+    this.getListData.emit({
+      'currentListId': this.currentListId,
+      'currentListName': this.currentListName,
+      'isListChosen': this.isListChosen,
+      'isListDelete': this.isListDelete,
+      'isFirstLoad': this.isFirstLoad
+    });
+
   }
 
   onDelete(value: boolean) {
     this.isListDelete = value;
     this.isListChosen = false;
 
-    this.getIsListChosen.emit(this.isListChosen);
-    this.getIsListDelete.emit(this.isListDelete);
+    this.getListData.emit({
+      'isListChosen': this.isListChosen,
+      'isListDelete': this.isListDelete
+    });
+
   }
 
 }

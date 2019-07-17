@@ -8,8 +8,8 @@
   "tasks": [
     {
       "id": 1,
-      "taskName": "Review ToDo list on angular.",
-      "done": false,
+      "taskName": "Review ToDoList App on Angular.",
+      "done": true,
       "listId": 1
     }
   ]

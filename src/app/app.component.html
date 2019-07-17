@@ -3,43 +3,21 @@
     <h1>{{ title }}</h1>
     <hr>
     <main>
+
       <app-list-container
-        (getCurrentListId)="getCurrentListId($event)"
-        (getCurrentListName)="getCurrentListName($event)"
-        (getIsListChosen)="getIsListChosen($event)"
-        (getIsListDelete)="getIsListDelete($event)"
-        (getIsFirstLoad)="getIsFirstLoad($event)"
+        (getListData)="getListData($event)"
       ></app-list-container>
 
-      <!--<div class="tasks-block">
-        <h2>Tasks<span id="listNameText" *ngIf="isListChosen">, in {{currentListName}}</span></h2>
-        <p id="tasksHint" *ngIf="!isListChosen || isListDelete">Choose or create list</p>
-        <div id="task-container" *ngIf="isListChosen || !isListDelete" [class.isHidden]="isFirstLoad">
-          <div id="task{{task.id}}" class="task" *ngFor="let task of tasks">
-            <app-task
-              [task]="task"
-              [tasks]="tasks"
-              [currentListId] = 'currentListId'
-              *ngIf="currentListId===task.listId"
-            ></app-task>
-          </div>
-          <div class="add_task" id="addTask">
-            <app-form
-              (onSubmit)="onSubmitTask($event)"
-              name="task"
-            ></app-form>
-          </div>
-        </div>
-      </div>-->
-
       <app-task-container
-        [currentListId]="currentListId"
-        [currentListName]="currentListName"
-        [isListChosen]="isListChosen"
-        [isListDelete]="isListDelete"
-        [isFirstLoad]="isFirstLoad"
-
+        [getListData]="{
+          'currentListId': currentListId,
+          'currentListName': currentListName,
+          'isListChosen': isListChosen,
+          'isListDelete': isListDelete,
+          'isFirstLoad': isFirstLoad
+        }"
       ></app-task-container>
+
     </main>
   </div>
 </div>

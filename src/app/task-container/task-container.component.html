@@ -1,13 +1,13 @@
 <div class="tasks-block">
-  <h2>Tasks<span id="listNameText" *ngIf="isListChosen">, in {{currentListName}}</span></h2>
-  <p id="tasksHint" *ngIf="!isListChosen || isListDelete">Choose or create list</p>
-  <div id="task-container" *ngIf="isListChosen || !isListDelete" [class.isHidden]="isFirstLoad">
+  <h2>Tasks<span id="listNameText" *ngIf="getListData.isListChosen">, in {{getListData.currentListName}}</span></h2>
+  <p id="tasksHint" *ngIf="!getListData.isListChosen || getListData.isListDelete">Choose or create list</p>
+  <div id="task-container" *ngIf="getListData.isListChosen || !getListData.isListDelete" [class.isHidden]="getListData.isFirstLoad">
     <div id="task{{task.id}}" class="task" *ngFor="let task of tasks">
       <app-task
         [task]="task"
         [tasks]="tasks"
-        [currentListId] = 'currentListId'
-        *ngIf="currentListId===task.listId"
+        [currentListId] = 'getListData.currentListId'
+        *ngIf="getListData.currentListId===task.listId"
       ></app-task>
     </div>
     <div class="add_task" id="addTask">

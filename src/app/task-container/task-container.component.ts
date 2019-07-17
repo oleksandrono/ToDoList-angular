@@ -11,13 +11,7 @@ export class TaskContainerComponent implements OnInit {
 
   tasks: Task[];
 
-
-  @Input() currentListId;
-  @Input() currentListName;
-  @Input() isListChosen;
-  @Input() isListDelete;
-  @Input() isFirstLoad;
-
+  @Input() getListData;
 
   urlTasks = 'http://localhost:3000/tasks';
 
@@ -56,7 +50,7 @@ export class TaskContainerComponent implements OnInit {
       id: taskId,
       taskName: inputName,
       done: false,
-      listId: this.currentListId
+      listId: this.getListData.currentListId
     };
 
     this.tasks.push(task);

@@ -22,20 +22,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getCurrentListId(_currentListId: any){
-    this.currentListId = _currentListId;
-  }
-  getCurrentListName(_currentListName: any){
-    this.currentListName = _currentListName;
-  }
-  getIsListChosen(_isListChosen: boolean){
-    this.isListChosen = _isListChosen;
-  }
-  getIsListDelete(_isListDelete: boolean){
-    this.isListDelete = _isListDelete;
-  }
-  getIsFirstLoad(_isFirsLoad: boolean){
-    this.isFirstLoad = _isFirsLoad;
+  getListData(_listData: any){
+    this.currentListId = _listData.currentListId;
+    this.currentListName = _listData.currentListName;
+    this.isListChosen = _listData.isListChosen;
+    this.isListDelete = _listData.isListDelete;
+    this.isFirstLoad = _listData.isFirstLoad;
   }
 
 }

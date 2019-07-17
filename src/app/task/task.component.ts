@@ -100,7 +100,6 @@ export class TaskComponent implements OnInit {
           };
 
           this.isChecked = true;
-          console.log(this.isChecked);
 
           this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
@@ -114,7 +113,6 @@ export class TaskComponent implements OnInit {
           };
 
           this.isChecked = false;
-          console.log(this.isChecked);
 
           this.http.put(`http://localhost:3000/tasks/${element.id}`, task, this.httpOptions)
             .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));

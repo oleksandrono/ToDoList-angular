@@ -11,34 +11,11 @@ main {
   display: flex;
   justify-content: space-between;
 }
-.lists-block {
-  width: 30%;
+app-list-container {
+  width: 28%;
 }
-.tasks-block {
-  width: 65%;
-}
-ul {
-  list-style: none;
-  padding: 0;
-}
-li {
-  border-bottom: 1px solid #808080;
-  transition: 0.3s ease;
-  background-color: transparent;
-  text-align: center;
-}
-li:hover {
-  background-color: #d2d2d2;
-  cursor: pointer;
-}
-#task-container {
-  visibility: visible;
-}
-.isHidden {
-  visibility: hidden !important;
-}
-.isVisible {
-  visibility: visible !important;
+app-task-container {
+  width: 68%;
 }
 .del {
   width: 100%;

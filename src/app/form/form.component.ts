@@ -25,18 +25,10 @@ export class FormComponent implements OnInit {
     let regExp = '^\\s*$';
 
     if (inputName.value.match(regExp)) {
-
       this.inputNotValid = true;
-
-      //__________________fix here
-      /*inputName.style.borderColor = '#ff0007';
-      setTimeout(()=>inputName.style.borderColor = '#ced4da', 1000);*/
-      //__________________fix here
-
     }
     else{
       this.inputNotValid = false;
-
       this.onSubmit.emit(inputName.value);
       inputName.value = '';
     }

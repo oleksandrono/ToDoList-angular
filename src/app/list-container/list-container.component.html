@@ -1,0 +1,20 @@
+<div class="lists-block">
+  <h2>Lists</h2>
+  <ul>
+    <li *ngFor="let list of lists" id="list{{list.id}}" (click)="chooseList(list.id, list.listName)">
+      <app-list
+        [list]="list"
+        [lists]="lists"
+        [currentListId] = "currentListId"
+        (onDelete)="onDelete($event)"
+      ></app-list>
+    </li>
+  </ul>
+
+  <div class="add-list" id="addList">
+    <app-form
+      (onSubmit)="onSubmitList($event)"
+      name="list"
+    ></app-form>
+  </div>
+</div>

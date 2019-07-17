@@ -10,6 +10,10 @@ import {FormsModule} from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './form/form.component';
+import {TaskSeviceService} from "./services/task-sevice.service";
+import {ListServiceService} from "./services/list-service.service";
+import { ListContainerComponent } from './list-container/list-container.component';
+import { TaskContainerComponent } from './task-container/task-container.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,8 @@ import { FormComponent } from './form/form.component';
     ListComponent,
     TaskComponent,
     FormComponent,
+    ListContainerComponent,
+    TaskContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +30,10 @@ import { FormComponent } from './form/form.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ListServiceService,
+    TaskSeviceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

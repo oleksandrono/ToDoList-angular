@@ -1,0 +1,20 @@
+<div class="tasks-block">
+  <h2>Tasks<span id="listNameText" *ngIf="isListChosen">, in {{currentListName}}</span></h2>
+  <p id="tasksHint" *ngIf="!isListChosen || isListDelete">Choose or create list</p>
+  <div id="task-container" *ngIf="isListChosen || !isListDelete" [class.isHidden]="isFirstLoad">
+    <div id="task{{task.id}}" class="task" *ngFor="let task of tasks">
+      <app-task
+        [task]="task"
+        [tasks]="tasks"
+        [currentListId] = 'currentListId'
+        *ngIf="currentListId===task.listId"
+      ></app-task>
+    </div>
+    <div class="add_task" id="addTask">
+      <app-form
+        (onSubmit)="onSubmitTask($event)"
+        name="task"
+      ></app-form>
+    </div>
+  </div>
+</div>

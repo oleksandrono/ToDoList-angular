@@ -3,31 +3,18 @@
     <h1>{{ title }}</h1>
     <hr>
     <main>
-      <div class="lists-block">
-        <h2>Lists</h2>
-        <ul>
-          <li *ngFor="let list of lists" id="list{{list.id}}" (click)="chooseList(list.id, list.listName)">
-            <app-list
-              [list]="list"
-              [lists]="lists"
-              [currentListId] = "currentListId"
-              (onDelete)="onDelete($event)"
-            ></app-list>
-          </li>
-        </ul>
+      <app-list-container
+        (getCurrentListId)="getCurrentListId($event)"
+        (getCurrentListName)="getCurrentListName($event)"
+        (getIsListChosen)="getIsListChosen($event)"
+        (getIsListDelete)="getIsListDelete($event)"
+        (getIsFirstLoad)="getIsFirstLoad($event)"
+      ></app-list-container>
 
-        <div class="add-list" id="addList">
-          <app-form
-            (onSubmit)="onSubmitList($event)"
-            name="list"
-          ></app-form>
-        </div>
-      </div>
-
-      <div class="tasks-block">
+      <!--<div class="tasks-block">
         <h2>Tasks<span id="listNameText" *ngIf="isListChosen">, in {{currentListName}}</span></h2>
-        <p id="tasksHint" *ngIf="!isListChosen || isDelete">Choose or create list</p>
-        <div id="task-container" *ngIf="isListChosen || !isDelete" [class.isHidden]="firstLoad">
+        <p id="tasksHint" *ngIf="!isListChosen || isListDelete">Choose or create list</p>
+        <div id="task-container" *ngIf="isListChosen || !isListDelete" [class.isHidden]="isFirstLoad">
           <div id="task{{task.id}}" class="task" *ngFor="let task of tasks">
             <app-task
               [task]="task"
@@ -43,7 +30,16 @@
             ></app-form>
           </div>
         </div>
-      </div>
+      </div>-->
+
+      <app-task-container
+        [currentListId]="currentListId"
+        [currentListName]="currentListName"
+        [isListChosen]="isListChosen"
+        [isListDelete]="isListDelete"
+        [isFirstLoad]="isFirstLoad"
+
+      ></app-task-container>
     </main>
   </div>
 </div>

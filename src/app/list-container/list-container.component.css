@@ -7,8 +7,14 @@ li {
   transition: 0.3s ease;
   background-color: transparent;
   text-align: center;
+  padding-left: 10px;
 }
 li:hover {
-  background-color: #d2d2d2;
+  background-color: #f8f8f8;
   cursor: pointer;
+}
+app-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

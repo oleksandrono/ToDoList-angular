@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {List} from "../list";
 
 import {ListServiceService} from "../services/list-service.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-list-container',
@@ -21,7 +22,7 @@ export class ListContainerComponent implements OnInit {
 
   @Output() getListData = new EventEmitter();
 
-  constructor(private listService: ListServiceService) { }
+  constructor(private listService: ListServiceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.listService.getLists()
@@ -31,7 +32,7 @@ export class ListContainerComponent implements OnInit {
   onSubmitList(inputName: string){
     let idList = [];
     if (this.lists.length > 0) {
-      this.lists.forEach((element, index) => {
+      this.lists.forEach((element) => {
         idList.push(element.id);
       });
     }
@@ -71,13 +72,14 @@ export class ListContainerComponent implements OnInit {
       'isFirstLoad': this.isFirstLoad
     });
 
+    console.log(this.route.data);
+
   }
 
 
   deleteList($event, listId){
     this.isListDelete = true;
 
-    $event.preventDefault();
     this.lists.forEach((element, index) => {
       if (element.id === listId) {
         this.lists.splice(index, 1);

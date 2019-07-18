@@ -3,20 +3,24 @@
     {
       "id": 1,
       "listName": "Products"
+    },
+    {
+      "id": 2,
+      "listName": "list"
     }
   ],
   "tasks": [
     {
       "id": 1,
-      "taskName": "Buy 1 bred.",
+      "taskName": "task",
       "done": false,
-      "listId": 1
+      "listId": 2
     },
     {
       "id": 2,
-      "taskName": "Buy 1 milk.",
+      "taskName": "task",
       "done": false,
-      "listId": 1
+      "listId": 2
     }
   ]
 }

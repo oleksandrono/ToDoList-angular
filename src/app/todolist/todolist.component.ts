@@ -20,12 +20,12 @@ export class TodolistComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getListData(_listData: any){
-    this.currentListId = _listData.currentListId;
-    this.currentListName = _listData.currentListName;
-    this.isListChosen = _listData.isListChosen;
-    this.isListDelete = _listData.isListDelete;
-    this.isFirstLoad = _listData.isFirstLoad;
+  getListData(listData: any){
+    this.currentListId = listData.currentListId;
+    this.currentListName = listData.currentListName;
+    this.isListChosen = listData.isListChosen;
+    this.isListDelete = listData.isListDelete;
+    this.isFirstLoad = listData.isFirstLoad;
   }
 
 

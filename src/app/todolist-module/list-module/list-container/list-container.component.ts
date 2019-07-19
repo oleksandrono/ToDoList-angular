@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {List} from "../list";
+import {List} from "../../../list";
 
-import {ListServiceService} from "../services/list-service.service";
+import {ListServiceService} from "../../../services/list-service.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({

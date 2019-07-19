@@ -6,13 +6,13 @@
   <p id="taskName{{task.id}}" *ngIf="!isEdit">{{task.taskName}}</p>
 
   <div class="buttons-group default-buttons" id="defaultButtons{{task.id}}" [ngClass]="{isHidden: isEdit}">
-    <button class="btn btn-light" id="editTask{{task.id}}" (click)="editTask(editTaskField)"><img src="../../assets/images/edit.svg" alt="Edit"></button>
-    <button class="btn btn-light" id="deleteTask{{task.id}}" (click)="deleteTask(task.id)"><img src="../../assets/images/delete.svg" alt="Delete"></button>
+    <button class="btn btn-light" id="editTask{{task.id}}" (click)="editTask(editTaskField)"><img src="../../../../assets/images/edit.svg" alt="Edit"></button>
+    <button class="btn btn-light" id="deleteTask{{task.id}}" (click)="deleteTask(task.id)"><img src="../../../../assets/images/delete.svg" alt="Delete"></button>
   </div>
   <div class="buttons-group edit-task" id="editButtons{{task.id}}" [ngClass]="{isVisible: isEdit}">
     <input type="text" class="edit-task-input form-control" id="editTaskField{{task.id}}" (keydown.enter)="saveEdit(editTaskField, task.id)" (keydown.escape)="cancelEdit()" #editTaskField>
-    <button class="btn btn-light" (click)="saveEdit(editTaskField, task.id)"><img src="../../assets/images/confirm.svg" alt="Save"></button>
-    <button class="btn btn-light" (click)="cancelEdit()" ><img src="../../assets/images/cancel.svg" alt="Cancel"></button>
+    <button class="btn btn-light" (click)="saveEdit(editTaskField, task.id)"><img src="../../../../assets/images/confirm.svg" alt="Save"></button>
+    <button class="btn btn-light" (click)="cancelEdit()" ><img src="../../../../assets/images/cancel.svg" alt="Cancel"></button>
   </div>
 </div>
 

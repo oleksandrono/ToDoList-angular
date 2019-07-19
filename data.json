@@ -12,15 +12,21 @@
   "tasks": [
     {
       "id": 1,
-      "taskName": "task",
+      "taskName": "task edited",
       "done": false,
       "listId": 2
     },
     {
-      "id": 2,
-      "taskName": "task",
+      "id": 3,
+      "taskName": "Buy 1 milk",
+      "done": true,
+      "listId": 1
+    },
+    {
+      "id": 4,
+      "taskName": "Buy 1 bred.",
       "done": false,
-      "listId": 2
+      "listId": 1
     }
   ]
 }

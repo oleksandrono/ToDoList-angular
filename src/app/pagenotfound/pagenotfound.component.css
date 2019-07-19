@@ -6,10 +6,18 @@
   width: 80%;
   height: auto;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 70px;
+}
+img {
+  width: 60%;
+}
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .not-found-link {
   color: #b60200;

@@ -10,11 +10,17 @@ li {
   padding-left: 10px;
 }
 li:hover {
-  background-color: #f8f8f8;
+  background-color: #ececec;
   cursor: pointer;
 }
 app-list {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.chosen {
+  background-color: #7a93ff;
+}
+.notChosen {
+  background-color: transparent;
 }

@@ -14,6 +14,10 @@ const routes: Routes = [
     component: TodolistComponent
   },
   {
+    path: 'todolist/:id',
+    component: TodolistComponent
+  },
+  {
     path: '**',
     // redirectTo: ''
     component: PagenotfoundComponent
@@ -25,4 +29,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

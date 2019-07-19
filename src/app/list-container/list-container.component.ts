@@ -19,14 +19,29 @@ export class ListContainerComponent implements OnInit {
   isListChosen;
   isFirstLoad = true;
 
+  listRouteId;
+
 
   @Output() getListData = new EventEmitter();
 
   constructor(private listService: ListServiceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.listRouteId = this.route.snapshot.paramMap.get('id');
+
     this.listService.getLists()
-      .subscribe((data: List[]) => this.lists = data);
+      .subscribe((data: List[]) => {
+        this.lists = data;
+        if(this.listRouteId <= this.lists.length && this.listRouteId !== null){
+          this.chooseList(this.lists[this.listRouteId-1].id, this.lists[this.listRouteId-1].listName);
+        }
+        else {
+          console.log('list not found');
+        }
+      });
+
+
   }
 
   onSubmitList(inputName: string){
@@ -71,8 +86,6 @@ export class ListContainerComponent implements OnInit {
       'isListDelete': this.isListDelete,
       'isFirstLoad': this.isFirstLoad
     });
-
-    console.log(this.route.data);
 
   }
 

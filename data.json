@@ -11,12 +11,6 @@
   ],
   "tasks": [
     {
-      "id": 1,
-      "taskName": "task edited",
-      "done": false,
-      "listId": 2
-    },
-    {
       "id": 3,
       "taskName": "Buy 1 milk",
       "done": true,

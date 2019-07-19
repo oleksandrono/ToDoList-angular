@@ -17,6 +17,10 @@ export class TaskComponent implements OnInit {
   isDelete;
   isListDelete;
 
+  @Input() listData;
+
+  editTaskField;
+
   constructor(private taskService: TaskServiceService) {
   }
 
@@ -41,28 +45,28 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  editTask(editTaskField: HTMLInputElement) {
+  editTask() {
     this.isEdit = true;
-    editTaskField.value = this.task.taskName;
+    this.editTaskField = this.task.taskName;
   }
 
-  saveEdit(editTaskField: HTMLInputElement, taskId: any) {
+  saveEdit(taskId: any) {
     this.isEdit = false;
-    if (editTaskField.value === ' ' || editTaskField.value.length < 1) {
+    if (this.editTaskField === ' ' || this.editTaskField.length < 1) {
       console.log('field must be not empty');
     }
     else {
       this.tasks.forEach((element) => {
-        if(element.taskName===editTaskField.value){
+        if(element.taskName === this.editTaskField){
           this.cancelEdit();
         }
         else {
           if (element.id === taskId) {
-            element.taskName = editTaskField.value;
+            element.taskName = this.editTaskField;
 
             let task = {
               id: element.id,
-              taskName: editTaskField.value,
+              taskName: this.editTaskField,
               done: element.done,
               listId: element.listId
             };
@@ -111,5 +115,4 @@ export class TaskComponent implements OnInit {
       }
     });
   }
-
 }

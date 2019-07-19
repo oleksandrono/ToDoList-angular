@@ -12,6 +12,8 @@ export class FormComponent implements OnInit {
 
   @Input() name;
 
+  inputName;
+
   constructor() { }
 
   ngOnInit() {
@@ -19,20 +21,18 @@ export class FormComponent implements OnInit {
 
   @Output() onSubmit = new EventEmitter();
 
-  add($event: Event, inputName: HTMLInputElement) {
+  add($event: Event) {
     $event.preventDefault();
 
     let regExp = '^\\s*$';
 
-    if (inputName.value.match(regExp)) {
+    if (this.inputName.match(regExp)) {
       this.inputNotValid = true;
     }
     else{
       this.inputNotValid = false;
-      this.onSubmit.emit(inputName.value);
-
-      //___fix here?
-      inputName.value = '';
+      this.onSubmit.emit(this.inputName);
+      this.inputName = '';
     }
 
   }

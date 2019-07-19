@@ -1,6 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../../task";
 import {TaskServiceService} from "../../../services/task-service.service";
+import {filter} from "rxjs/operators";
+import {from} from "rxjs";
+import {listener} from "@angular/core/src/render3";
 
 @Component({
   selector: 'app-task-container',
@@ -18,7 +21,7 @@ export class TaskContainerComponent implements OnInit {
 
   ngOnInit() {
     this.taskService.getTasks()
-     .subscribe((data: Task[]) => this.tasks = data);
+      .subscribe((data: Task[]) => this.tasks = data);
   }
 
   onSubmitTask(inputName: string){

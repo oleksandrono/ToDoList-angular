@@ -1,6 +1,6 @@
-<form id="addForm" class="add-form" (submit)="add($event, inputName)">
-  <input id="NameField" class="name_input form-control" type="text" placeholder="{{name}} name"
-         #inputName [class.inputNotValid]="inputNotValid">
+<form id="addForm" class="add-form" (submit)="add($event)">
+  <input id="NameField" name="inputName" class="name_input form-control" type="text" placeholder="{{name}} name"
+         [class.inputNotValid]="inputNotValid" [(ngModel)]="inputName">
   <input id="addSubmit" class="button btn btn-light" type="submit" value="Add {{name}}">
 </form>
 <p [hidden]="!inputNotValid" class="form-hint">field must be not empty</p>

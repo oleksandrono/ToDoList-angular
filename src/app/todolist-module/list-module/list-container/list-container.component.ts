@@ -21,7 +21,6 @@ export class ListContainerComponent implements OnInit {
 
   listRouteId;
 
-
   @Output() getListData = new EventEmitter();
 
   constructor(private listService: ListServiceService, private route: ActivatedRoute) { }
@@ -88,7 +87,6 @@ export class ListContainerComponent implements OnInit {
     });
 
   }
-
 
   deleteList($event, listId){
     this.isListDelete = true;

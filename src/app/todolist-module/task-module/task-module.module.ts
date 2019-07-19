@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {TaskContainerComponent} from "./task-container/task-container.component";
 import {TaskComponent} from "./task/task.component";
 import {CommonsModuleModule} from "../../commons-module/commons-module.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import {CommonsModuleModule} from "../../commons-module/commons-module.module";
   ],
   imports: [
     CommonsModuleModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
     TaskContainerComponent

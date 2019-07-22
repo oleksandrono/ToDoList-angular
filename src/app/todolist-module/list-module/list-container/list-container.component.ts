@@ -71,7 +71,13 @@ export class ListContainerComponent implements OnInit {
       .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
   }
 
+  isActive(listId){
+    return this.currentListId === listId;
+  }
+
   chooseList(listId: any, listName: any) {
+    this.isActive(listId);
+
     this.currentListId = listId;
     this.currentListName = listName;
     this.isFirstLoad = false;

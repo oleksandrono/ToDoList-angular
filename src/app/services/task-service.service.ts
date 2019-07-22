@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Task} from "../task";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class TaskServiceService {
         'Content-Type':  'application/json'
       })
     };
-    this.urlTasks = 'http://localhost:3000/tasks';
+    this.urlTasks = 'http://localhost:3500/tasks';
   }
 
   getTasks(){

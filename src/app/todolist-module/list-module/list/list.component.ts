@@ -10,6 +10,9 @@ export class ListComponent implements OnInit {
   @Input() list;
 
   @Output() deleteList = new EventEmitter();
+
+  @Input() isActive;
+
   constructor() {}
 
   ngOnInit() {

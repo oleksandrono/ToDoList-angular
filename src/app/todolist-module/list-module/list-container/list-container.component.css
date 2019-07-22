@@ -24,3 +24,9 @@ app-list {
 .notChosen {
   background-color: transparent;
 }
+.isActive {
+  background-color: #7a93ff;
+}
+.isActive:hover {
+  background-color: #7a93ff;
+}

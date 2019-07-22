@@ -6,21 +6,33 @@
     },
     {
       "id": 2,
-      "listName": "list"
+      "listName": "InCamp"
     }
   ],
   "tasks": [
     {
-      "id": 3,
+      "id": 1,
       "taskName": "Buy 1 milk",
-      "done": true,
+      "done": false,
       "listId": 1
     },
     {
-      "id": 4,
-      "taskName": "Buy 1 bred.",
+      "id": 2,
+      "taskName": "Buy 1 bred",
       "done": false,
       "listId": 1
+    },
+    {
+      "id": 3,
+      "taskName": "Review Todolist Angular",
+      "done": false,
+      "listId": 2
+    },
+    {
+      "id": 4,
+      "taskName": "Review Todolist backend",
+      "done": false,
+      "listId": 2
     }
   ]
 }

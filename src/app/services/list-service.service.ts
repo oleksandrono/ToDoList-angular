@@ -15,7 +15,7 @@ export class ListServiceService {
         'Content-Type':  'application/json'
       })
     };
-    this.urlList = 'http://localhost:3000/lists';
+    this.urlList = 'http://localhost:3500/lists';
   }
 
   getLists(){

@@ -5,10 +5,12 @@
         id="list{{list.id}}"
         (click)="chooseList(list.id, list.listName)"
         routerLink="/todolist/{{list.id}}"
+        [ngClass]="{isActive: isActive(list.id)}"
     >
       <app-list
         (deleteList)="deleteList($event, list.id)"
         [list]="list"
+        [isActive]="isActive(list.id)"
       ></app-list>
     </li>
   </ul>

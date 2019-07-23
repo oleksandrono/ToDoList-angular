@@ -26,12 +26,13 @@ export class ListContainerComponent implements OnInit {
   @Output() select = new EventEmitter<List>();
 
   constructor(private listService: ListServiceService, private route: ActivatedRoute) { }
+
   ngOnInit() {
     let listId$ =  this.route.paramMap.pipe(map(p => +p.get('id')));
     let lists$ = this.listService.getLists();
 
     this.activeList$ = combineLatest(listId$, lists$)
-      .pipe(map(([id, lists]) => lists.find(l => l.id === id) ))
+      .pipe(map(([id, lists]) => lists.find(l => l.id == id)));
 
     this.activeList$.subscribe(this.select);
 
@@ -39,11 +40,9 @@ export class ListContainerComponent implements OnInit {
       .pipe(
         switchMap((lists) => {
           return this.actions$.pipe(
-            tap(console.log),
             scan<ListAction, List[]>(applyAction, lists)
           )
         }),
-        tap(console.log)
       );
   }
 
@@ -62,9 +61,7 @@ export class ListContainerComponent implements OnInit {
           return lists.slice(0, index).concat(lists.slice(index + 1))
       }))
       .subscribe(
-        action => {this.actions$.next(action)},
-        (err) => {console.log('error')},
-        () => {console.log('complete remove list')}
+        action => {this.actions$.next(action)}
         )
   }
 

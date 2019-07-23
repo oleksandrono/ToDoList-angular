@@ -1,5 +1,5 @@
 <div class="tasks-block">
-  <h2>Tasks<span id="listNameText" *ngIf="list">, in {{list.listName}}</span> {{listId$ | async}} </h2>
+  <h2>Tasks<!--<span id="listNameText" *ngIf="list">, in {{list.listName}}</span> {{listId$ | async}} --></h2>
   <div id="task-container">
 
     <div id="task{{task.id}}" class="task" *ngFor="let task of tasks$ | async">

@@ -6,18 +6,8 @@
 <hr>
 <main>
 
-  <app-list-container
-    (getListData)="getListData($event)"
-  ></app-list-container>
+  <app-list-container></app-list-container>
 
-  <app-task-container
-    [getListData]="{
-        'currentListId': currentListId,
-        'currentListName': currentListName,
-        'isListChosen': isListChosen,
-        'isListDelete': isListDelete,
-        'isFirstLoad': isFirstLoad
-      }"
-  ></app-task-container>
+  <app-task-container></app-task-container>
 
 </main>

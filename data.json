@@ -1,38 +1,25 @@
 {
   "lists": [
     {
-      "id": 1,
-      "listName": "Products"
+      "listName": "qwer",
+      "id": 1
     },
     {
-      "id": 2,
-      "listName": "InCamp"
+      "listName": "qweqwe",
+      "id": 2
+    },
+    {
+      "listName": "and more",
+      "id": 10
+    },
+    {
+      "listName": "and more!!!!!!!!!!!!!",
+      "id": 11
+    },
+    {
+      "listName": "1213",
+      "id": 14
     }
   ],
-  "tasks": [
-    {
-      "id": 1,
-      "taskName": "Buy 1 milk",
-      "done": false,
-      "listId": 1
-    },
-    {
-      "id": 2,
-      "taskName": "Buy 1 bred",
-      "done": false,
-      "listId": 1
-    },
-    {
-      "id": 3,
-      "taskName": "Review Todolist Angular",
-      "done": false,
-      "listId": 2
-    },
-    {
-      "id": 4,
-      "taskName": "Review Todolist backend",
-      "done": false,
-      "listId": 2
-    }
-  ]
+  "tasks": []
 }

@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Task} from "../task";
@@ -12,28 +13,23 @@ export class TaskServiceService {
   urlTasks;
 
   constructor(private http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    this.urlTasks = 'http://localhost:3500/tasks';
+    this.urlTasks = 'http://localhost:3000/tasks';
   }
 
-  getTasks(){
-    return this.http.get(this.urlTasks);
+  getTasks(): Observable<Task[]>{
+    return this.http.get<Task[]>(this.urlTasks);
   }
 
-  addTask(task){
-    return this.http.post(this.urlTasks, task, this.httpOptions);
+  addTask(task: Task): Observable<Task>{
+    return this.http.post<Task>(this.urlTasks, task);
   }
 
-  deleteTask(elementId){
-    return this.http.delete(`${this.urlTasks}/${elementId}`, this.httpOptions);
+  deleteTask(elementId): Observable<Task>{
+    return this.http.delete<Task>(`${this.urlTasks}/${elementId}`);
   }
 
-  putTask(elementId, task){
-    return this.http.put(`${this.urlTasks}/${elementId}`, task, this.httpOptions)
+  putTask(elementId, task: Task): Observable<Task>{
+    return this.http.put<Task>(`${this.urlTasks}/${elementId}`, task)
   }
 
 }

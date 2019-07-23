@@ -3,6 +3,13 @@ import {List} from "../../../list";
 
 import {ListServiceService} from "../../../services/list-service.service";
 import {ActivatedRoute} from "@angular/router";
+import {map, scan, switchMap, tap, multicast} from "rxjs/operators";
+import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
+
+interface ListAction {
+  (lists: List[]): List[]
+}
+const applyAction = (lists, action) => action(lists);
 
 @Component({
   selector: 'app-list-container',
@@ -11,107 +18,54 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ListContainerComponent implements OnInit {
 
-  lists: List[];
+  activeList$: Observable<List>;
+  lists$: Observable<List[]>;
 
-  currentListId;
-  currentListName;
-  isListDelete;
-  isListChosen;
-  isFirstLoad = true;
+  actions$: Subject<ListAction> = new BehaviorSubject(lists => lists);
 
-  listRouteId;
-
-  @Output() getListData = new EventEmitter();
+  @Output() select = new EventEmitter<List>();
 
   constructor(private listService: ListServiceService, private route: ActivatedRoute) { }
-
   ngOnInit() {
+    let listId$ =  this.route.paramMap.pipe(map(p => +p.get('id')));
+    let lists$ = this.listService.getLists();
 
-    this.listRouteId = this.route.snapshot.paramMap.get('id');
+    this.activeList$ = combineLatest(listId$, lists$)
+      .pipe(map(([id, lists]) => lists.find(l => l.id === id) ))
 
-    this.listService.getLists()
-      .subscribe((data: List[]) => {
-        this.lists = data;
-        if(this.listRouteId <= this.lists.length && this.listRouteId !== null){
-          this.chooseList(this.lists[this.listRouteId-1].id, this.lists[this.listRouteId-1].listName);
-        }
-        else {
-          console.log('list not found');
-        }
-      });
+    this.activeList$.subscribe(this.select);
 
-
+    this.lists$ = lists$
+      .pipe(
+        switchMap((lists) => {
+          return this.actions$.pipe(
+            tap(console.log),
+            scan<ListAction, List[]>(applyAction, lists)
+          )
+        }),
+        tap(console.log)
+      );
   }
 
-  onSubmitList(inputName: string){
-    let idList = [];
-    if (this.lists.length > 0) {
-      this.lists.forEach((element) => {
-        idList.push(element.id);
-      });
-    }
-
-    let listId = 1;
-    if (this.lists.length === 0) {
-      listId = 1;
-    }
-    else if (this.lists.length > 0) {
-      for (let i = 1; i <= this.lists.length; i++) {
-        listId = Math.max.apply(null, idList) + 1;
-      }
-    }
-
-    const list = {
-      id: listId,
-      listName: inputName
-    };
-    this.lists.push(list);
-
-    this.listService.addList(list)
-      .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+  onSubmitList(listName: string){
+    this.listService.addList({ listName })
+      .pipe(
+        map(list => lists => [...lists, list])
+      )
+      .subscribe( action => {this.actions$.next(action)});
   }
 
-  isActive(listId){
-    return this.currentListId === listId;
-  }
-
-  chooseList(listId: any, listName: any) {
-    this.isActive(listId);
-
-    this.currentListId = listId;
-    this.currentListName = listName;
-    this.isFirstLoad = false;
-    this.isListDelete = false;
-    this.isListChosen = true;
-
-    this.getListData.emit({
-      'currentListId': this.currentListId,
-      'currentListName': this.currentListName,
-      'isListChosen': this.isListChosen,
-      'isListDelete': this.isListDelete,
-      'isFirstLoad': this.isFirstLoad
-    });
-
-  }
-
-  deleteList($event, listId){
-    this.isListDelete = true;
-
-    this.lists.forEach((element, index) => {
-      if (element.id === listId) {
-        this.lists.splice(index, 1);
-
-        this.listService.deleteList(element.id)
-          .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
-      }
-    });
-
-    this.isListDelete = true;
-    this.isListChosen = false;
-    this.getListData.emit({
-      'isListChosen': this.isListChosen,
-      'isListDelete': this.isListDelete
-    });
+  deleteList(list) {
+    this.listService.deleteList(list.id)
+      .pipe(map(_ => lists => {
+          let index = lists.indexOf(list);
+          return lists.slice(0, index).concat(lists.slice(index + 1))
+      }))
+      .subscribe(
+        action => {this.actions$.next(action)},
+        (err) => {console.log('error')},
+        () => {console.log('complete remove list')}
+        )
   }
 
 }

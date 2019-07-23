@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Task} from "../../../task";
 import {TaskServiceService} from "../../../services/task-service.service";
-import {filter} from "rxjs/operators";
-import {from} from "rxjs";
-import {listener} from "@angular/core/src/render3";
+import {map, tap} from "rxjs/operators";
+import {ActivatedRoute} from "@angular/router";
+import {combineLatest, Observable} from "rxjs";
+
 
 @Component({
   selector: 'app-task-container',
@@ -12,45 +13,33 @@ import {listener} from "@angular/core/src/render3";
 })
 export class TaskContainerComponent implements OnInit {
 
-  tasks: Task[];
+  tasks$: Observable<Task[]>;
+  private listId$: Observable<number>;
 
-  @Input() getListData;
-
-  constructor(private taskService: TaskServiceService) {
+  constructor(
+    private taskService: TaskServiceService,
+    private route: ActivatedRoute
+    ) {
   }
 
   ngOnInit() {
-    this.taskService.getTasks()
-      .subscribe((data: Task[]) => this.tasks = data);
+    this.listId$ =  this.route.paramMap.pipe(map(p => +p.get('id')));
+    this.tasks$ = combineLatest(this.listId$, this.taskService.getTasks())
+      .pipe(map(([id, tasks]) => tasks.filter(t => t.listId === id) ))
   }
 
-  onSubmitTask(inputName: string){
-    const idList = [];
-    if (this.tasks.length > 0) {
-      this.tasks.forEach((element, index) => {
-        idList.push(element.id);
-      });
-    }
-    let taskId = 1;
-    if (this.tasks.length === 0) {
-      taskId = 1;
-    } else if (this.tasks.length > 0) {
-      for (let i = 1; i <= this.tasks.length; i++) {
-        taskId = Math.max.apply(null, idList) + 1;
-      }
-    }
-
-    const task = {
-      id: taskId,
-      taskName: inputName,
-      done: false,
-      listId: this.getListData.currentListId
-    };
-
-    this.tasks.push(task);
-
-    this.taskService.addTask(task)
-      .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+  onSubmitTask(inputName: string) {
+    //   const task = {
+    //     taskName: inputName,
+    //     done: false,
+    //     // listId: this.getListData.currentListId
+    //   };
+    //
+    //   this.taskService.addTask(task)
+    //     .subscribe((data: Task) => {
+    //       console.log('POST request is successful', data);
+    //       this.tasks.push(data);
+    //     }, error => console.error(error));
+    // }
   }
-
 }

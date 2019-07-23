@@ -18,8 +18,8 @@ export class ListComponent implements OnInit {
   ngOnInit() {
   }
 
-  onDeleteList(listId){
-    this.deleteList.emit(listId);
+  onDeleteList(){
+    this.deleteList.emit(this.list);
   }
 
 }

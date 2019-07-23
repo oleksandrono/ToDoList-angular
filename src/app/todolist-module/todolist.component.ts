@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {List} from "../list";
 
 @Component({
   selector: 'app-todolist',
@@ -8,24 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class TodolistComponent implements OnInit {
 
   title = 'Todo List App';
-
-  currentListId;
-  currentListName;
-  isListDelete;
-  isListChosen;
-  isFirstLoad = true;
+  private list: List;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  getListData(listData: any){
-    this.currentListId = listData.currentListId;
-    this.currentListName = listData.currentListName;
-    this.isListChosen = listData.isListChosen;
-    this.isListDelete = listData.isListDelete;
-    this.isFirstLoad = listData.isFirstLoad;
+  onSelectList(list: List){
+    this.list = list;
   }
 
 

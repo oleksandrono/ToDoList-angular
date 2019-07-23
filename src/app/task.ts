@@ -1,5 +1,5 @@
 export class Task {
-  id: number;
+  id?: number;
   taskName: string;
   done: boolean;
   listId: number;

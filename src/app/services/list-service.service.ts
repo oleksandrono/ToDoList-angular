@@ -1,33 +1,29 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {List} from "../list";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListServiceService {
 
-  httpOptions;
   urlList;
 
   constructor(private http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    this.urlList = 'http://localhost:3500/lists';
+    this.urlList = 'http://localhost:3000/lists';
   }
 
-  getLists(){
-    return this.http.get(this.urlList);
+  getLists(): Observable<List[]>{
+    return this.http.get<List[]>(this.urlList);
   }
 
-  addList(list){
-    return this.http.post(this.urlList, list, this.httpOptions);
+  addList(list: List): Observable<List>{
+    return this.http.post<List>(this.urlList, list);
   }
 
-  deleteList(elementId){
-    return this.http.delete(`${this.urlList}/${elementId}`, this.httpOptions)
+  deleteList(elementId): Observable<List>{
+    return this.http.delete<List>(`${this.urlList}/${elementId}`)
   }
 
 }

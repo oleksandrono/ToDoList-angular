@@ -39,36 +39,18 @@ export class ListContainerComponent implements OnInit {
           console.log('list not found');
         }
       });
-
-
   }
 
   onSubmitList(inputName: string){
-    let idList = [];
-    if (this.lists.length > 0) {
-      this.lists.forEach((element) => {
-        idList.push(element.id);
-      });
-    }
-
-    let listId = 1;
-    if (this.lists.length === 0) {
-      listId = 1;
-    }
-    else if (this.lists.length > 0) {
-      for (let i = 1; i <= this.lists.length; i++) {
-        listId = Math.max.apply(null, idList) + 1;
-      }
-    }
-
     const list = {
-      id: listId,
       listName: inputName
     };
-    this.lists.push(list);
 
     this.listService.addList(list)
-      .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+      .subscribe((data: List) => {
+        console.log('POST request is successful', data);
+        this.lists.push(data);
+      }, error => console.error(error));
   }
 
   isActive(listId){
@@ -91,7 +73,6 @@ export class ListContainerComponent implements OnInit {
       'isListDelete': this.isListDelete,
       'isFirstLoad': this.isFirstLoad
     });
-
   }
 
   deleteList($event, listId){

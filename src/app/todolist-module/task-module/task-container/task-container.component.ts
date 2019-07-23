@@ -25,32 +25,16 @@ export class TaskContainerComponent implements OnInit {
   }
 
   onSubmitTask(inputName: string){
-    const idList = [];
-    if (this.tasks.length > 0) {
-      this.tasks.forEach((element, index) => {
-        idList.push(element.id);
-      });
-    }
-    let taskId = 1;
-    if (this.tasks.length === 0) {
-      taskId = 1;
-    } else if (this.tasks.length > 0) {
-      for (let i = 1; i <= this.tasks.length; i++) {
-        taskId = Math.max.apply(null, idList) + 1;
-      }
-    }
-
     const task = {
-      id: taskId,
       taskName: inputName,
       done: false,
       listId: this.getListData.currentListId
     };
 
-    this.tasks.push(task);
-
     this.taskService.addTask(task)
-      .subscribe(data => console.log('POST request is successful', data), error => console.error(error));
+      .subscribe((data: Task) => {
+        console.log('POST request is successful', data);
+        this.tasks.push(data);
+      }, error => console.error(error));
   }
-
 }

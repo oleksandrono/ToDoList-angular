@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskServiceService} from "../../../services/task-service.service";
+import {Task} from "../../../task";
 
 @Component({
   selector: 'app-task',
@@ -65,14 +66,15 @@ export class TaskComponent implements OnInit {
             element.taskName = this.editTaskField;
 
             let task = {
-              id: element.id,
               taskName: this.editTaskField,
               done: element.done,
               listId: element.listId
             };
 
             this.taskService.putTask(element.id, task)
-              .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
+              .subscribe((data: Task) => {
+                console.log('PUT is successful', data);
+              }, error => console.error(error));
           }
         }
       });
@@ -97,7 +99,7 @@ export class TaskComponent implements OnInit {
           this.isChecked = true;
 
           this.taskService.putTask(element.id, task)
-            .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
+            .subscribe((data: Task) => console.log('PUT is successful', data), error => console.error(error));
         }
         else {
           let task = {
@@ -110,7 +112,7 @@ export class TaskComponent implements OnInit {
           this.isChecked = false;
 
           this.taskService.putTask(element.id, task)
-            .subscribe((data) => console.log('PUT is successful', data), error => console.error(error));
+            .subscribe((data: Task) => console.log('PUT is successful', data), error => console.error(error));
         }
       }
     });

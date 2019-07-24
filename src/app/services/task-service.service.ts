@@ -11,7 +11,7 @@ export class TaskServiceService {
   urlTasks;
 
   constructor(private http: HttpClient) {
-    this.urlTasks = 'http://localhost:3000/tasks';
+    this.urlTasks = 'http://localhost:8080/tasks';
   }
 
   getTasks(): Observable<Task[]>{

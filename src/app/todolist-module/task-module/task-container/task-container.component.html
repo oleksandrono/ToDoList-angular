@@ -9,7 +9,6 @@
         (deleteATask)="deleteTask(task)"
         (saveAEdit)="saveEdit($event, task)"
         (isTaskCompleted)="isCompleted($event, task)"
-        *ngIf="getListData.currentListId === task.listId"
       ></app-task>
     </div>
 

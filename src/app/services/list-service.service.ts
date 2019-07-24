@@ -11,7 +11,7 @@ export class ListServiceService {
   urlList;
 
   constructor(private http: HttpClient) {
-    this.urlList = 'http://localhost:3000/lists';
+    this.urlList = 'http://localhost:8080/lists';
   }
 
   getLists(): Observable<List[]>{

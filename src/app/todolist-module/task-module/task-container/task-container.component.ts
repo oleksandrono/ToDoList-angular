@@ -32,7 +32,6 @@ export class TaskContainerComponent implements OnInit, OnChanges {
 
     if (changes.getListData.currentValue.currentListId === this.currentListId) {
       this.getTasks();
-      console.log(this.tasks);
     }
   }
 
@@ -49,6 +48,7 @@ export class TaskContainerComponent implements OnInit, OnChanges {
       done: false,
       listId: this.currentListId
     };
+    console.log(task);
 
     this.taskService.addTask(task)
       .subscribe((data: Task) => {
@@ -86,18 +86,18 @@ export class TaskContainerComponent implements OnInit, OnChanges {
     let completedTask;
     if(isDone){
       completedTask = {
-        id: task.id,
         taskName: task.taskName,
         done: true,
-        listId: task.listId
+        listId: task.listId,
+        id: task.id
       };
     }
     else{
       completedTask = {
-        id: task.id,
         taskName: task.taskName,
         done: false,
-        listId: task.listId
+        listId: task.listId,
+        id: task.id
       };
     }
     let index = this.tasks.indexOf(task);

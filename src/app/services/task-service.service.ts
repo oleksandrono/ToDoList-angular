@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Task} from "../task";
 import {Observable} from "rxjs";
@@ -16,6 +16,10 @@ export class TaskServiceService {
 
   getTasks(): Observable<Task[]>{
     return this.http.get<Task[]>(this.urlTasks);
+  }
+
+  getTaskByListId(listId): Observable<Task[]>{
+    return this.http.get<Task[]>(`${this.urlTasks}?listId=${listId}`);
   }
 
   addTask(task: Task): Observable<Task>{

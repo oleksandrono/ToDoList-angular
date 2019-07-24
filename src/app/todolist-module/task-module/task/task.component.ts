@@ -1,6 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TaskServiceService} from "../../../services/task-service.service";
-import {Task} from "../../../task";
 
 @Component({
   selector: 'app-task',
@@ -10,20 +8,17 @@ import {Task} from "../../../task";
 export class TaskComponent implements OnInit {
 
   @Input() task;
-  @Input() tasks;
   @Input() currentListId;
 
   isEdit;
   isChecked;
-  isDelete;
-  isListDelete;
-
-  @Input() listData;
-
   editTaskField;
 
-  constructor(private taskService: TaskServiceService) {
-  }
+  @Output() deleteATask = new EventEmitter();
+  @Output() saveAEdit = new EventEmitter();
+  @Output() isTaskCompleted = new EventEmitter();
+
+  constructor() {}
 
   ngOnInit() {
     if(this.task.done){
@@ -34,16 +29,8 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  deleteTask(taskId: any) {
-    this.isDelete = true;
-    this.tasks.forEach((element, index) => {
-      if (element.id === taskId) {
-        this.tasks.splice(index, 1);
-
-        this.taskService.deleteTask(element.id)
-          .subscribe(() => console.log('DELETE is successful'), error => console.error(error));
-      }
-    });
+  deleteTask(task){
+    this.deleteATask.emit(task);
   }
 
   editTask() {
@@ -51,33 +38,13 @@ export class TaskComponent implements OnInit {
     this.editTaskField = this.task.taskName;
   }
 
-  saveEdit(taskId: any) {
-    this.isEdit = false;
-    if (this.editTaskField === ' ' || this.editTaskField.length < 1) {
-      console.log('field must be not empty');
+  saveEdit(task) {
+    if(task.taskName === this.editTaskField){
+      this.cancelEdit();
     }
-    else {
-      this.tasks.forEach((element) => {
-        if(element.taskName === this.editTaskField){
-          this.cancelEdit();
-        }
-        else {
-          if (element.id === taskId) {
-            element.taskName = this.editTaskField;
-
-            let task = {
-              taskName: this.editTaskField,
-              done: element.done,
-              listId: element.listId
-            };
-
-            this.taskService.putTask(element.id, task)
-              .subscribe((data: Task) => {
-                console.log('PUT is successful', data);
-              }, error => console.error(error));
-          }
-        }
-      });
+    else{
+      this.saveAEdit.emit(this.editTaskField);
+      this.isEdit = false;
     }
   }
 
@@ -85,36 +52,15 @@ export class TaskComponent implements OnInit {
     this.isEdit = false;
   }
 
-  isCompleted($event, taskId: any) {
-    this.tasks.forEach((element)=>{
-      if(element.id===taskId){
-        if ($event.target.checked) {
-          let task = {
-            id: element.id,
-            taskName: element.taskName,
-            done: true,
-            listId: element.listId
-          };
+  isCompleted($event) {
+    if ($event.target.checked) {
+      this.isTaskCompleted.emit(true);
+      this.isChecked = true;
+    }
+    else{
+      this.isTaskCompleted.emit(false);
+      this.isChecked = false;
+    }
 
-          this.isChecked = true;
-
-          this.taskService.putTask(element.id, task)
-            .subscribe((data: Task) => console.log('PUT is successful', data), error => console.error(error));
-        }
-        else {
-          let task = {
-            id: element.id,
-            taskName: element.taskName,
-            done: false,
-            listId: element.listId
-          };
-
-          this.isChecked = false;
-
-          this.taskService.putTask(element.id, task)
-            .subscribe((data: Task) => console.log('PUT is successful', data), error => console.error(error));
-        }
-      }
-    });
   }
 }

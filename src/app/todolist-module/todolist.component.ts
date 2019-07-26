@@ -21,8 +21,8 @@ export class TodolistComponent implements OnInit {
   }
 
   getListData(listData: any){
-    this.currentListId = listData.currentListId;
-    this.currentListName = listData.currentListName;
+    this.currentListId = listData.list.listId;
+    this.currentListName = listData.list.listName;
     this.isListChosen = listData.isListChosen;
     this.isListDelete = listData.isListDelete;
     this.isFirstLoad = listData.isFirstLoad;

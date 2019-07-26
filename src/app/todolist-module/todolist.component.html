@@ -12,8 +12,10 @@
 
   <app-task-container
     [getListData]="{
-        'currentListId': currentListId,
-        'currentListName': currentListName,
+        list: {
+          'listId': currentListId,
+          'listName': currentListName
+        },
         'isListChosen': isListChosen,
         'isListDelete': isListDelete,
         'isFirstLoad': isFirstLoad

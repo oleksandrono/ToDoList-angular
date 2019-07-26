@@ -3,6 +3,7 @@ import {List} from "../../../list";
 
 import {ListServiceService} from "../../../services/list-service.service";
 import {ActivatedRoute} from "@angular/router";
+import {error} from "util";
 
 @Component({
   selector: 'app-list-container',
@@ -32,8 +33,8 @@ export class ListContainerComponent implements OnInit {
     this.listService.getLists()
       .subscribe((data: List[]) => {
         this.lists = data;
-        if(this.listRouteId <= this.lists.length && this.listRouteId !== null){
-          this.chooseList(this.lists[this.listRouteId-1].id, this.lists[this.listRouteId-1].listName);
+        if(this.lists.some(list => list.id == this.listRouteId)){
+          this.chooseList(this.listRouteId, this.lists.find(list => list.id == this.listRouteId).listName);
         }
         else {
           console.log('list not found');
@@ -41,7 +42,7 @@ export class ListContainerComponent implements OnInit {
       });
   }
 
-  onSubmitList(inputName: string){
+  onSubmitList(inputName: any){
     const list = {
       listName: inputName
     };
@@ -54,7 +55,7 @@ export class ListContainerComponent implements OnInit {
   }
 
   isActive(listId){
-    return this.currentListId === listId;
+    return this.currentListId == listId;
   }
 
   chooseList(listId: any, listName: any) {
@@ -67,8 +68,10 @@ export class ListContainerComponent implements OnInit {
     this.isListChosen = true;
 
     this.getListData.emit({
-      'currentListId': this.currentListId,
-      'currentListName': this.currentListName,
+      'list':{
+        'listId': this.currentListId,
+        'listName': this.currentListName,
+      },
       'isListChosen': this.isListChosen,
       'isListDelete': this.isListDelete,
       'isFirstLoad': this.isFirstLoad

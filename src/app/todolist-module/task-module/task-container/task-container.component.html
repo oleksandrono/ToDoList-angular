@@ -1,5 +1,5 @@
 <div class="tasks-block">
-  <h2>Tasks<span id="listNameText" *ngIf="getListData.isListChosen">, in {{getListData.currentListName}}</span></h2>
+  <h2>Tasks<span id="listNameText" *ngIf="getListData.isListChosen">, in {{getListData.list.listName}}</span></h2>
   <p id="tasksHint" *ngIf="!getListData.isListChosen || getListData.isListDelete">Choose or create list</p>
   <div id="task-container" *ngIf="getListData.isListChosen || !getListData.isListDelete" [class.isHidden]="getListData.isFirstLoad">
 

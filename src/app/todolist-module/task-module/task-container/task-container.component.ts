@@ -22,15 +22,16 @@ export class TaskContainerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      map(p => +p.get('id')))
-      .subscribe(data => this.currentListId = data);
     this.getTasks();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
-    if (changes.getListData.currentValue.currentListId === this.currentListId) {
+    this.route.paramMap.pipe(
+      map(p => +p.get('id')))
+      .subscribe(data => {
+        this.currentListId = data;
+      });
+    if (changes.getListData.currentValue.list.listId === this.currentListId) {
       this.getTasks();
     }
   }
@@ -42,7 +43,7 @@ export class TaskContainerComponent implements OnInit, OnChanges {
       });
   }
 
-  onSubmitTask(inputName: string){
+  onSubmitTask(inputName: any){
     const task = {
       taskName: inputName,
       done: false,

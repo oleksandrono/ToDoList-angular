@@ -1,16 +1,16 @@
 <div class="lists-block">
   <h2>Lists</h2>
   <ul>
-    <li *ngFor="let list of lists"
+    <li *ngFor="let list of lists$ | async"
         id="list{{list.id}}"
-        (click)="chooseList(list.id, list.listName)"
         routerLink="/todolist/{{list.id}}"
-        [ngClass]="{isActive: isActive(list.id)}"
+        (click)="chooseList(list.id, list.listName)"
+        [ngClass]="{isActive: (activeList$ | async)?.id === list.id}"
     >
       <app-list
         (deleteList)="deleteList(list)"
         [list]="list"
-        [isActive]="isActive(list.id)"
+        [isActive]="(activeList$ | async)?.id === list.id"
       ></app-list>
     </li>
   </ul>

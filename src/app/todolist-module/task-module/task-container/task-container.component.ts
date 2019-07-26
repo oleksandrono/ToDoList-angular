@@ -49,8 +49,6 @@ export class TaskContainerComponent implements OnInit, OnChanges {
       done: false,
       listId: this.currentListId
     };
-    console.log(task);
-
     this.taskService.addTask(task)
       .subscribe((data: Task) => {
         console.log('POST request is successful', data);

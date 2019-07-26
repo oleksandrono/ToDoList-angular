@@ -8,7 +8,7 @@
         [ngClass]="{isActive: isActive(list.id)}"
     >
       <app-list
-        (deleteList)="deleteList($event, list.id)"
+        (deleteList)="deleteList(list)"
         [list]="list"
         [isActive]="isActive(list.id)"
       ></app-list>

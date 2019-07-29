@@ -4,7 +4,7 @@
     <li *ngFor="let list of lists$ | async"
         id="list{{list.id}}"
         routerLink="/todolist/{{list.id}}"
-        (click)="chooseList(list.id, list.listName)"
+        (click)="chooseList(list)"
         [ngClass]="{isActive: (activeList$ | async)?.id === list.id}"
     >
       <app-list

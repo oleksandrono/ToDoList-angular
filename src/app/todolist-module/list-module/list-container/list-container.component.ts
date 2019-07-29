@@ -3,8 +3,20 @@ import {List} from "../../../list";
 
 import {ListServiceService} from "../../../services/list-service.service";
 import {ActivatedRoute, Route, Router} from "@angular/router";
-import {BehaviorSubject, Observable, Subject, combineLatest, fromEvent} from "rxjs";
-import {find, map, scan, switchMap, tap} from "rxjs/operators";
+import {BehaviorSubject, Observable, Subject, combineLatest, fromEvent, timer, of} from "rxjs";
+import {
+  debounce,
+  debounceTime, distinctUntilChanged,
+  filter,
+  find, findIndex,
+  map,
+  scan,
+  switchMap,
+  tap,
+  throttleTime,
+  withLatestFrom
+} from "rxjs/operators";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 
 interface ListAction {
@@ -19,19 +31,19 @@ const applyAction = (lists, action) => action(lists);
 })
 export class ListContainerComponent implements OnInit {
 
-  lists: List[];
-
   currentListId;
   currentListName;
   isListDelete;
   isListChosen;
   isFirstLoad = true;
 
+  selectedList$: Observable<List>;
   activeList$: Observable<List>;
   lists$: Observable<List[]>;
 
   actions$: Subject<ListAction> = new BehaviorSubject(lists => lists);
 
+  listId;
 
   @Output() getListData = new EventEmitter();
 
@@ -39,12 +51,8 @@ export class ListContainerComponent implements OnInit {
 
   ngOnInit() {
     let listId$ =  this.route.paramMap.pipe(map(p => +p.get('id')));
-    let lists$ = this.listService.getLists();
-
-    this.activeList$ = combineLatest(listId$, lists$)
-      .pipe(map(([id, lists]) => lists.find(l => l.id == id)));
-
-    this.lists$ = lists$
+    listId$.subscribe(data => this.listId = data);
+    this.lists$ = this.listService.getLists()
       .pipe(
         switchMap((lists) => {
           return this.actions$.pipe(
@@ -52,52 +60,47 @@ export class ListContainerComponent implements OnInit {
           )
         }),
       );
-    let listId;
-    listId$.subscribe(data => listId = data);
-    lists$.subscribe(data => {
-      this.lists = data;
-      if(data.some(list => list.id == listId)) {
-        this.chooseList(listId, data.find(list => list.id == listId).listName);
+
+    this.activeList$ = combineLatest(listId$, this.lists$)
+      .pipe(map(([id, lists]) => lists.find(l => l.id == id)));
+
+    this.selectedList$ = this.activeList$;
+
+    this.lists$.subscribe(data => {
+      if(data.some(list => list.id == this.listId)) {
+        this.chooseList({'id': this.listId, 'listName': data.find(list => list.id == this.listId).listName});
       }
       else {
         console.log('list not found');
       }
     });
 
-    fromEvent(document, 'keyup').subscribe((event: KeyboardEvent) => {
-        if (event.key === 'ArrowUp') {
-          this.lists$.subscribe(lists => {
-            this.previousList(lists);
-          });
-        }
-        if (event.key === 'ArrowDown') {
-          this.lists$.subscribe(lists => {
-            this.nextList(lists);
-          });
-        }
-
-    });
+    let keydownEvent =  fromEvent(document, 'keydown').pipe(
+      filter((event: KeyboardEvent) => event.key == 'ArrowUp' || event.key == 'ArrowDown')
+    );
+    keydownEvent.pipe(
+      throttleTime(200),
+      withLatestFrom(this.selectedList$, this.lists$),
+      map(this.changeListWithArrow)
+    ).subscribe(list => this.router.navigate([`/todolist/${list.id}`]));
   }
+
 
   onSubmitList(inputName: any){
-    this.listService.addList({ listName: inputName })
-      .pipe(
+    this.listService.addList({ listName: inputName }).pipe(
         map(list => lists => [...lists, list])
-      )
-      .subscribe( action => {this.actions$.next(action)});
+      ).subscribe( action => this.actions$.next(action));
   }
 
-  chooseList(listId: any, listName: any) {
-    this.currentListId = listId;
-    this.currentListName = listName;
+  chooseList(list: List) {
     this.isFirstLoad = false;
     this.isListDelete = false;
     this.isListChosen = true;
 
     this.getListData.emit({
       'list':{
-        'listId': this.currentListId,
-        'listName': this.currentListName,
+        'listId': list.id,
+        'listName': list.listName,
       },
       'isListChosen': this.isListChosen,
       'isListDelete': this.isListDelete,
@@ -110,13 +113,10 @@ export class ListContainerComponent implements OnInit {
     this.listService.deleteList(list.id)
       .pipe(map(_ => lists => {
         let index = lists.indexOf(list);
-        return lists.slice(0, index).concat(lists.slice(index + 1));
+        lists.splice(index, 1);
+        return lists;
       }))
-      .subscribe(
-        action => {
-          this.actions$.next(action);
-        }
-      );
+      .subscribe(action => this.actions$.next(action));
     this.isListChosen = false;
     this.isListDelete = true;
 
@@ -131,37 +131,35 @@ export class ListContainerComponent implements OnInit {
     });
   }
 
-  private changeListWithArrow(index){
-    if (this.activeList$ !== undefined) {
-      this.lists$.subscribe(lists => {
-        if(this.isListDelete === false){
-          this.router.navigate([`/todolist/${lists[index].id}`], {relativeTo: this.route}).then(r => r);
-          this.chooseList(lists[index].id, lists[index].listName);
-        }
-        else{
-          return false;
-        }
-      });
+  changeListWithArrow = ([event, currentList, lists]) => {
+    if (event.key == 'ArrowDown') {
+      return this.nextList(lists, currentList);
+    }
+    else if(event.key == 'ArrowUp'){
+      return this.previousList(lists, currentList);
+    }
+  };
+
+  nextList(lists, currentList) {
+    let index = lists.findIndex(list => list.id == currentList.id);
+    if (index == lists.length - 1) {
+      this.chooseList(lists[0]);
+      return lists[0];
+    }
+    else {
+      this.chooseList(lists[index + 1]);
+      return lists[index + 1];
     }
   }
-
-  private previousList(lists) {
-    let index = lists.findIndex(list => list.id == this.currentListId);
-    if (index !== 0) {
-      this.changeListWithArrow(index-1);
+  previousList(lists, currentList) {
+    let index = lists.findIndex(list => list.id == currentList.id);
+    if(index == 0){
+      this.chooseList(lists[lists.length - 1]);
+      return lists[lists.length - 1];
     }
     else{
-      this.changeListWithArrow(lists.length-1);
-    }
-  }
-
-  private nextList(lists) {
-    let index = lists.findIndex(list => list.id == this.currentListId);
-    if (index < lists.length - 1) {
-      this.changeListWithArrow(index + 1);
-    }
-    else{
-      this.changeListWithArrow(0);
+      this.chooseList(lists[index - 1]);
+      return lists[index - 1];
     }
   }
 }
